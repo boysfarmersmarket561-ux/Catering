@@ -8,6 +8,10 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+function slugify(s: string) {
+  return s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+}
+
 function Index() {
   const b = baseMenu.business;
   const categories = baseMenu.categories;
@@ -59,7 +63,7 @@ function Index() {
                 <Link
                   key={c.name}
                   to="/menu"
-                  search={{ category: c.name } as never}
+                  hash={`cat-${slugify(c.name)}`}
                   className={
                     "group flex flex-col justify-between rounded-3xl border border-border/60 bg-card p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg " +
                     (i % 2 === 0 ? "md:translate-y-6" : "")
@@ -101,7 +105,7 @@ function Index() {
               <Link
                 key={c.name}
                 to="/menu"
-                search={{ category: c.name } as never}
+                hash={`cat-${slugify(c.name)}`}
                 className="group rounded-2xl border border-border/60 bg-card p-5 transition hover:border-primary/60 hover:shadow-md"
               >
                 <div className="font-display text-xl text-foreground group-hover:text-primary">
