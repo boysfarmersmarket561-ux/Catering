@@ -143,16 +143,29 @@
     border-color: var(--color-border);
   }
 
+  html {
+    /* Scale the whole rem-based type ramp up ~12.5% (16px -> 18px root). */
+    font-size: 112.5%;
+  }
+
+  @media (max-width: 640px) {
+    html {
+      font-size: 106.25%; /* ~17px root on small screens */
+    }
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
-    font-size: 15px;
+    font-size: 1rem; /* inherits scaled root = ~18px desktop */
+    line-height: 1.65;
   }
 
   h1, h2, h3, h4, .font-display {
     font-family: var(--font-display);
     letter-spacing: -0.005em;
     color: var(--color-primary);
+    line-height: 1.15;
   }
 }
