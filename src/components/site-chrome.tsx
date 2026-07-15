@@ -39,10 +39,10 @@ export function SiteHeader() {
       <div className="relative bg-background">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-top bg-repeat-x sm:h-40 lg:h-48"
+          className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-top bg-no-repeat sm:h-48 lg:h-56"
           style={{
             backgroundImage: `url(${fruitHeader})`,
-            backgroundSize: "auto 100%",
+            backgroundSize: "100% auto",
           }}
         />
         <div className="relative mx-auto flex max-w-7xl flex-col items-center px-4 pt-28 pb-5 sm:px-6 sm:pt-36 lg:px-8 lg:pt-44">
