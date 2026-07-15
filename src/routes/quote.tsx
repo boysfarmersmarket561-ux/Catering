@@ -101,11 +101,11 @@ function QuotePage() {
   }
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-      <header className="mb-8">
-        <span className="text-xs font-semibold uppercase tracking-widest text-accent">Your quote</span>
-        <h1 className="mt-1 font-display text-5xl">Build a Quote</h1>
-        <p className="mt-2 max-w-2xl text-muted-foreground">
+    <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+      <header className="mb-12">
+        <span className="text-sm font-semibold uppercase tracking-[0.25em] text-accent">Your quote</span>
+        <h1 className="mt-3 font-display text-6xl md:text-7xl">Build a Quote</h1>
+        <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
           Review your selected items and share your event details. We'll follow up to confirm availability and
           finalize pricing.
         </p>

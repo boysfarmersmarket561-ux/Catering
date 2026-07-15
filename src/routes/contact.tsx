@@ -25,11 +25,11 @@ function ContactPage() {
   const b = baseMenu.business;
   const mapQuery = encodeURIComponent(`${b.address.street}, ${b.address.city}, ${b.address.state} ${b.address.zip}`);
   return (
-    <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
-      <header className="mb-10">
-        <span className="text-xs font-semibold uppercase tracking-widest text-accent">Visit us</span>
-        <h1 className="mt-1 font-display text-5xl">Contact & About</h1>
-        <p className="mt-3 max-w-2xl text-lg italic text-muted-foreground">{b.tagline}</p>
+    <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
+      <header className="mb-14">
+        <span className="text-sm font-semibold uppercase tracking-[0.25em] text-accent">Visit us</span>
+        <h1 className="mt-3 font-display text-6xl md:text-7xl">Contact & About</h1>
+        <p className="mt-5 max-w-2xl text-xl italic text-muted-foreground">{b.tagline}</p>
       </header>
 
       <div className="grid gap-8 md:grid-cols-2">
@@ -70,7 +70,7 @@ function ContactPage() {
             />
           </div>
           <div className="space-y-3 p-6">
-            <h3 className="font-display text-2xl">About the market</h3>
+            <h3 className="font-display text-3xl">About the market</h3>
             <p className="text-muted-foreground">
               For decades, The Boys Farmers Market has been Delray Beach's beloved source for handpicked produce,
               artisan cheeses, prepared foods, and gourmet catering. Our kitchen team crafts each platter and entrée
