@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { baseMenu } from "@/data/menu";
-import { ArrowRight, Leaf, Sparkles, Utensils } from "lucide-react";
+import { ArrowRight, MapPin, Sparkles, Utensils } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -18,69 +18,32 @@ function Index() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,theme(colors.accent/25),transparent_60%),radial-gradient(ellipse_at_bottom_left,theme(colors.primary/20),transparent_55%)]" />
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-20 sm:px-6 md:grid-cols-2 md:py-28 lg:px-8">
-          <div>
-            <span className="inline-flex items-center gap-2 rounded-full bg-secondary px-3 py-1 text-xs font-semibold uppercase tracking-widest text-secondary-foreground">
-              <Leaf className="h-3.5 w-3.5" /> Delray Beach, FL
-            </span>
-            <h1 className="mt-6 font-display text-5xl leading-[1.05] text-foreground md:text-6xl lg:text-7xl">
-              Gourmet catering,<br />
-              <span className="text-primary">market-fresh</span> flavor.
-            </h1>
-            <p className="mt-6 max-w-lg text-lg italic text-muted-foreground">
-              {b.tagline}
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button asChild size="lg" className="rounded-full">
-                <Link to="/menu">
-                  Browse the Menu <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="rounded-full border-primary/40 text-primary hover:bg-primary/10">
-                <Link to="/quote">Request a Quote</Link>
-              </Button>
-            </div>
-            <div className="mt-10 flex gap-8 text-sm">
-              <div>
-                <div className="font-display text-3xl text-primary">230+</div>
-                <div className="text-muted-foreground">Handcrafted items</div>
-              </div>
-              <div>
-                <div className="font-display text-3xl text-primary">8</div>
-                <div className="text-muted-foreground">Menu categories</div>
-              </div>
-              <div>
-                <div className="font-display text-3xl text-primary">7</div>
-                <div className="text-muted-foreground">Days a week</div>
-              </div>
-            </div>
+      <section className="relative border-b border-border bg-background">
+        <div className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 md:py-24 lg:px-8">
+          <span className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-accent">
+            <MapPin className="h-3 w-3" /> Delray Beach, FL
+          </span>
+          <h1 className="mt-5 font-display text-5xl leading-[1.05] text-primary md:text-6xl lg:text-7xl">
+            Catering
+          </h1>
+          <div className="mx-auto mt-4 h-[2px] w-24 bg-accent" />
+          <p className="mx-auto mt-6 max-w-2xl text-lg italic text-muted-foreground">
+            {b.tagline}
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Button asChild size="lg">
+              <Link to="/menu">
+                Browse the Menu <ArrowRight className="ml-1 h-4 w-4" />
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="outline">
+              <Link to="/quote">Request a Quote</Link>
+            </Button>
           </div>
-          <div className="relative">
-            <div className="grid grid-cols-2 gap-4">
-              {categories.slice(0, 4).map((c, i) => (
-                <Link
-                  key={c.name}
-                  to="/menu"
-                  hash={`cat-${slugify(c.name)}`}
-                  className={
-                    "group flex flex-col justify-between rounded-3xl border border-border/60 bg-card p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg " +
-                    (i % 2 === 0 ? "md:translate-y-6" : "")
-                  }
-                >
-                  <Utensils className="h-6 w-6 text-accent" />
-                  <div>
-                    <div className="mt-8 font-display text-xl text-foreground group-hover:text-primary">
-                      {c.name}
-                    </div>
-                    <div className="text-xs text-muted-foreground">
-                      {c.sections.reduce((n, s) => n + s.items.length, 0)} items
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
+          <div className="mt-12 flex flex-wrap justify-center gap-10 text-sm">
+            <Stat n="230+" label="Handcrafted items" />
+            <Stat n="8" label="Menu categories" />
+            <Stat n="7" label="Days a week" />
           </div>
         </div>
       </section>
@@ -106,12 +69,13 @@ function Index() {
                 key={c.name}
                 to="/menu"
                 hash={`cat-${slugify(c.name)}`}
-                className="group rounded-2xl border border-border/60 bg-card p-5 transition hover:border-primary/60 hover:shadow-md"
+                className="group rounded-lg border border-border bg-card p-5 shadow-sm transition hover:border-accent hover:shadow-md"
               >
-                <div className="font-display text-xl text-foreground group-hover:text-primary">
+                <Utensils className="mb-3 h-5 w-5 text-accent" />
+                <div className="font-display text-xl text-primary">
                   {c.name}
                 </div>
-                <div className="mt-1 text-sm text-muted-foreground">
+                <div className="mt-1 text-xs uppercase tracking-wider text-muted-foreground">
                   {c.sections.length} sections · {count} items
                 </div>
               </Link>
@@ -120,5 +84,14 @@ function Index() {
         </div>
       </section>
     </>
+  );
+}
+
+function Stat({ n, label }: { n: string; label: string }) {
+  return (
+    <div>
+      <div className="font-display text-3xl text-primary">{n}</div>
+      <div className="text-xs uppercase tracking-wider text-muted-foreground">{label}</div>
+    </div>
   );
 }
