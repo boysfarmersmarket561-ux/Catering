@@ -19,17 +19,17 @@ export function SiteHeader() {
     <header className="sticky top-0 z-40 border-b border-border bg-background">
       {/* Utility bar */}
       <div className="border-b border-border/60 bg-background">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-1.5 text-[11px] text-primary sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2 text-xs text-primary sm:px-6 lg:px-8">
           <span className="inline-flex items-center gap-1.5">
-            <Clock className="h-3 w-3" />
+            <Clock className="h-3.5 w-3.5" />
             <span className="hidden sm:inline">Store Hours:</span> Monday – Sunday 8:30am – 6:00pm
           </span>
-          <span className="flex items-center gap-3">
+          <span className="flex items-center gap-4">
             <a href="https://www.facebook.com/" target="_blank" rel="noreferrer" aria-label="Facebook" className="hover:text-accent">
-              <Facebook className="h-3.5 w-3.5" />
+              <Facebook className="h-4 w-4" />
             </a>
             <a href="https://www.instagram.com/" target="_blank" rel="noreferrer" aria-label="Instagram" className="hover:text-accent">
-              <Instagram className="h-3.5 w-3.5" />
+              <Instagram className="h-4 w-4" />
             </a>
           </span>
         </div>
@@ -39,17 +39,17 @@ export function SiteHeader() {
       <div className="relative bg-background">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-top bg-repeat-x sm:h-36"
+          className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-top bg-repeat-x sm:h-40 lg:h-48"
           style={{
             backgroundImage: `url(${fruitHeader})`,
             backgroundSize: "auto 100%",
           }}
         />
-        <div className="relative mx-auto flex max-w-7xl flex-col items-center px-4 pt-24 pb-3 sm:px-6 sm:pt-32 lg:px-8">
+        <div className="relative mx-auto flex max-w-7xl flex-col items-center px-4 pt-28 pb-5 sm:px-6 sm:pt-36 lg:px-8 lg:pt-44">
           <Link to="/" aria-label={b.name} className="block">
-            <img src={boysLogo} alt={b.name} className="h-20 w-auto sm:h-24" />
+            <img src={boysLogo} alt={b.name} className="h-28 w-auto sm:h-36 lg:h-44" />
           </Link>
-          <span className="mt-1 text-[10px] font-semibold uppercase tracking-[0.28em] text-muted-foreground">
+          <span className="mt-2 text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground sm:text-sm">
             Located in Delray Beach, FL
           </span>
         </div>
@@ -57,8 +57,8 @@ export function SiteHeader() {
 
       {/* Main nav */}
       <div className="border-t border-border/60 bg-background">
-        <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-2 sm:px-6 lg:px-8">
-          <nav className="flex flex-1 items-center justify-center gap-1 overflow-x-auto sm:gap-2">
+        <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-3 sm:px-6 sm:py-4 lg:px-8">
+          <nav className="flex flex-1 items-center justify-center gap-2 overflow-x-auto sm:gap-5">
             {nav.map((n) => {
               const active = n.to === "/" ? pathname === "/" : pathname.startsWith(n.to);
               return (
@@ -66,7 +66,7 @@ export function SiteHeader() {
                   key={n.to}
                   to={n.to}
                   className={
-                    "relative whitespace-nowrap px-3 py-2 text-[12px] font-semibold uppercase tracking-[0.18em] transition-colors sm:text-[13px] " +
+                    "relative whitespace-nowrap px-4 py-3 text-sm font-semibold uppercase tracking-[0.2em] transition-colors sm:text-base " +
                     (active
                       ? "text-primary"
                       : "text-primary/80 hover:text-primary")
@@ -75,7 +75,7 @@ export function SiteHeader() {
                   {n.label}
                   <span
                     className={
-                      "pointer-events-none absolute inset-x-2 -bottom-[1px] h-[2px] transition-all " +
+                      "pointer-events-none absolute inset-x-3 -bottom-[1px] h-[3px] transition-all " +
                       (active ? "bg-accent" : "bg-transparent group-hover:bg-accent")
                     }
                   />
@@ -95,15 +95,15 @@ export function SiteHeader() {
 export function SiteFooter() {
   const b = baseMenu.business;
   return (
-    <footer className="mt-16 border-t-2 border-accent/60 bg-secondary">
-      <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-3 lg:px-8">
+    <footer className="mt-24 border-t-2 border-accent/60 bg-secondary">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
         <div>
-          <img src={boysLogo} alt={b.name} className="h-16 w-auto" />
-          <p className="mt-3 text-sm italic text-muted-foreground">{b.tagline}</p>
+          <img src={boysLogo} alt={b.name} className="h-24 w-auto" />
+          <p className="mt-4 text-base italic text-muted-foreground">{b.tagline}</p>
         </div>
-        <div className="space-y-2 text-sm">
+        <div className="space-y-3 text-base">
           <div className="flex items-start gap-2">
-            <MapPin className="mt-0.5 h-4 w-4 text-primary" />
+            <MapPin className="mt-0.5 h-5 w-5 text-primary" />
             <span>
               {b.address.street}
               <br />
@@ -111,20 +111,20 @@ export function SiteFooter() {
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <Phone className="h-4 w-4 text-primary" /> {b.phone}
+            <Phone className="h-5 w-5 text-primary" /> {b.phone}
           </div>
           <div className="flex items-center gap-2">
-            <Mail className="h-4 w-4 text-primary" />
+            <Mail className="h-5 w-5 text-primary" />
             <a className="hover:underline" href={`mailto:${b.bakery_email}`}>
               {b.bakery_email}
             </a>
           </div>
         </div>
-        <div className="text-sm">
-          <h4 className="mb-2 font-display text-lg">Hours</h4>
+        <div className="text-base">
+          <h4 className="mb-3 font-display text-2xl">Hours</h4>
           <p className="text-muted-foreground">Monday – Sunday</p>
           <p>8:30 AM – 6:00 PM</p>
-          <p className="mt-3 text-xs text-muted-foreground">
+          <p className="mt-4 text-sm text-muted-foreground">
             © {new Date().getFullYear()} {b.name}. All rights reserved.
           </p>
         </div>
