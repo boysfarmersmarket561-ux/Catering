@@ -38,7 +38,7 @@ export const Route = createFileRoute("/admin")({
 });
 
 // Default staff passcode. Note: this is a client-side gate only — replace with real auth later.
-const DEFAULT_PASSCODE = "boys2025";
+const DEFAULT_PASSCODE = "boys2024";
 const AUTH_KEY = "boys-admin-auth-v1";
 
 function AdminPage() {
@@ -92,7 +92,7 @@ function PasscodeGate({ onUnlock }: { onUnlock: () => void }) {
           Unlock
         </Button>
         <p className="text-center text-[11px] text-muted-foreground">
-          Default passcode: <span className="font-mono">boys2025</span> — replace before going live.
+          Default passcode: <span className="font-mono">boys2024</span> — replace before going live.
         </p>
       </form>
     </div>
