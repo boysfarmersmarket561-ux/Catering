@@ -24,11 +24,11 @@ export const Route = createFileRoute("/menu")({
 function MenuPage() {
   const menu = useMenu();
   return (
-    <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-      <header className="mb-8">
-        <span className="text-xs font-semibold uppercase tracking-widest text-accent">Menu</span>
-        <h1 className="mt-1 font-display text-5xl">The Full Catering Menu</h1>
-        <p className="mt-2 max-w-2xl text-muted-foreground">
+    <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <header className="mb-12">
+        <span className="text-sm font-semibold uppercase tracking-[0.25em] text-accent">Menu</span>
+        <h1 className="mt-3 font-display text-6xl md:text-7xl">The Full Catering Menu</h1>
+        <p className="mt-4 max-w-3xl text-lg text-muted-foreground">
           Browse every platter, entrée, and dessert we cater. Add items to build a quote — we'll follow up with
           confirmation, dietary options, and delivery details.
         </p>
