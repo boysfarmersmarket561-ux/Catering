@@ -9,11 +9,11 @@ export function CartIndicator() {
     <Link
       to="/quote"
       aria-label="View quote cart"
-      className="relative grid h-10 w-10 place-items-center rounded-full bg-secondary text-secondary-foreground transition hover:bg-accent hover:text-accent-foreground"
+      className="relative grid h-12 w-12 place-items-center rounded-full bg-secondary text-secondary-foreground transition hover:bg-accent hover:text-accent-foreground"
     >
-      <ShoppingBasket className="h-5 w-5" />
+      <ShoppingBasket className="h-6 w-6" />
       {count > 0 && (
-        <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-accent px-1 text-[11px] font-semibold text-accent-foreground">
+        <span className="absolute -right-1 -top-1 grid h-6 min-w-6 place-items-center rounded-full bg-accent px-1.5 text-xs font-semibold text-accent-foreground">
           {count}
         </span>
       )}
