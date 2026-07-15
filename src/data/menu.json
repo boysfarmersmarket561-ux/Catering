@@ -1,0 +1,765 @@
+{
+  "business": {
+    "name": "The Boys Farmers Market",
+    "menu_title": "Gourmet Catering",
+    "tagline": "Bringing our gourmet meals from our kitchen to your table!",
+    "address": {
+      "street": "14378 S. Military Trail",
+      "city": "Delray Beach",
+      "state": "FL",
+      "zip": "33484"
+    },
+    "phone": "(561) 496-0810 Ext. 1",
+    "fax": "(561) 495-0440",
+    "website": "https://boysfarmersmarket.com",
+    "bakery_email": "Bakery@boysmkt.com"
+  },
+  "source": {
+    "file": "PLEASE UPDATE THIS MENU ONLY!!!.pdf",
+    "pages": 26,
+    "parser": "LlamaParse",
+    "tier": "agentic_plus",
+    "job_id": "pjb-3nn7lwrl72nzzaqx5yz8kbr24dhc",
+    "parsed_on": "2026-07-13"
+  },
+  "currency": "USD",
+  "price_units": {
+    "platter": "Flat price for the platter/tray as described",
+    "per_person": "Priced per head",
+    "per_lb": "Priced per pound",
+    "per_foot": "Priced per foot of hero",
+    "each": "Priced per single unit",
+    "per_kabob": "Priced per kabob",
+    "per_pastry": "Priced per pastry",
+    "per_pieces": "Price for the stated piece-count tier",
+    "unpriced": "No price printed on the menu - confirm with the store"
+  },
+  "categories": [
+    {
+      "name": "Fresh Fruit",
+      "page": 1,
+      "sections": [
+        {
+          "name": "Fruit Platters",
+          "note": "All fruits are seasonal, but most platters come with Honeydew, Cantaloupe, Watermelon, Pineapple, Strawberries, Kiwi & Grapes.",
+          "items": [
+            { "name": "More than a Mini", "description": "Chunks", "size": "8\" x 12\" Tray", "serves": "10 - 15 people", "prices": [ { "label": null, "amount": 29.99, "unit": "platter" } ] },
+            { "name": "Small", "description": "Chunks", "size": "12 Inch Platter", "serves": "15 - 20 people", "prices": [ { "label": null, "amount": 39.99, "unit": "platter" } ] },
+            { "name": "Medium", "description": "Chunks", "size": "16 Inch Platter", "serves": "25 - 30 people", "prices": [ { "label": null, "amount": 49.99, "unit": "platter" } ] },
+            { "name": "Large", "description": "Slices", "size": "16\" Round Dome Top Lid", "serves": "35 - 40 people", "prices": [ { "label": null, "amount": 69.99, "unit": "platter" } ] },
+            { "name": "Jumbo", "description": "Slices", "size": "18 Inch Platter", "serves": "50 - 70 people", "prices": [ { "label": null, "amount": 129.99, "unit": "platter" } ] }
+          ]
+        },
+        {
+          "name": "Paradise Platters",
+          "note": "Paradise Platters have exotic fruits such as Mango, Papaya, Dragon Fruit, and Coconut.",
+          "items": [
+            { "name": "Baby Paradise", "description": "Slices", "size": "16\" Platter", "serves": "20 - 25 people", "prices": [ { "label": null, "amount": 69.99, "unit": "platter" } ] },
+            { "name": "Paradise", "description": "Slices", "size": "18\" Platter", "serves": "35 - 40 people", "prices": [ { "label": null, "amount": 89.99, "unit": "platter" } ] }
+          ]
+        },
+        {
+          "name": "Speciality Platters",
+          "note": null,
+          "page": 2,
+          "items": [
+            { "name": "Tropical Platter", "description": "Contains Oranges, Mango, Grapefruit, Papaya.", "size": null, "serves": "10 - 14 people", "prices": [ { "label": null, "amount": 39.99, "unit": "platter" } ] },
+            { "name": "Berry Medley", "description": "Contains Strawberries, Blueberries, Blackberries and Raspberries.", "size": null, "serves": "10 - 14 people", "prices": [ { "label": null, "amount": 39.99, "unit": "platter" } ] },
+            { "name": "Teresa Platter", "description": "Contains Pineapple, Strawberries, and Melon.", "size": null, "serves": "10 - 14 people", "prices": [ { "label": null, "amount": 39.99, "unit": "platter" } ] }
+          ]
+        },
+        {
+          "name": "Fruit Kabobs",
+          "note": null,
+          "page": 2,
+          "items": [
+            { "name": "Fruit Kabobs", "description": "Beautifully displayed over fresh Pineapple and fruit.", "size": "10\" Kabobs", "serves": null, "prices": [ { "label": null, "amount": 3.99, "unit": "per_kabob" } ] }
+          ]
+        },
+        {
+          "name": "Fruit Baskets",
+          "note": null,
+          "page": 2,
+          "items": [
+            { "name": "Whole Fruit Basket", "description": "Fresh Whole Fruits only", "size": null, "serves": null, "prices": [ { "label": null, "amount": 49.99, "unit": "each" } ] },
+            { "name": "Watermelon Basket", "description": "Carved Watermelon Basket", "size": null, "serves": null, "prices": [ { "label": null, "amount": 49.99, "unit": "each" } ] },
+            { "name": "Whole Fruit Basket (with Cookies, Cheese and Crackers)", "description": "With Cookies, Cheese and Crackers", "size": null, "serves": null, "prices": [ { "label": null, "amount": 89.99, "unit": "each" } ] },
+            { "name": "Whole Fruit Basket (with Cookies, Cheese, Crackers and Wine)", "description": "With Cookies, Cheese, Crackers and Wine. Add Candy or Coffee.", "size": null, "serves": null, "prices": [ { "label": null, "amount": 109.99, "unit": "each" } ] }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Fresh Vegetable Platters",
+      "page": 3,
+      "sections": [
+        {
+          "name": "Vegetable Platters",
+          "note": "All Veggie Platters come with broccoli, carrots, cauliflower, cucumber, celery, grape tomatoes, yellow & green squash, and peppers. Choice of: all platters are served with the Boys' Own Dip OR Homemade Hummus.",
+          "items": [
+            { "name": "More than a Mini", "description": null, "size": "8\" x 12\" Tray", "serves": "25 - 30 people", "prices": [ { "label": null, "amount": 29.99, "unit": "platter" } ] },
+            { "name": "Small", "description": null, "size": "12\" Platter", "serves": "35 - 40 people", "prices": [ { "label": null, "amount": 39.99, "unit": "platter" } ] },
+            { "name": "Large", "description": null, "size": "16\" Platter", "serves": "45 - 60 people", "prices": [ { "label": null, "amount": 79.99, "unit": "platter" } ] },
+            { "name": "Jumbo", "description": null, "size": "18\" Platter", "serves": "65 - 80 people", "prices": [ { "label": null, "amount": 99.99, "unit": "platter" } ] }
+          ]
+        },
+        {
+          "name": "Special Sizes Available",
+          "note": "In a hurry? No need to order, smaller options always available to pick up and go!",
+          "items": [
+            { "name": "Veggie Mix", "description": null, "size": null, "serves": "4 - 8 people", "prices": [ { "label": null, "amount": 6.99, "unit": "each" } ] },
+            { "name": "Veggie Bowl", "description": null, "size": null, "serves": "8 people", "prices": [ { "label": null, "amount": 17.99, "unit": "each" } ] }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Cheese",
+      "page": 4,
+      "sections": [
+        {
+          "name": "Cheese Platters",
+          "note": "Cheese platters include Brie, Havarti, Goat Cheese (Rosey Goat w/ Rosemary), Sheep Cheese (Manchego), Cheddar, Blueberries, Boysenberries, Raspberries, a variety of Fruits and Crackers included.",
+          "items": [
+            { "name": "Mini", "description": null, "size": "8\" x 12\" Tray", "serves": "8 - 12 people", "prices": [ { "label": null, "amount": 39.99, "unit": "platter" } ] },
+            { "name": "Small", "description": null, "size": "12\" Platter", "serves": "15 - 20 people", "prices": [ { "label": null, "amount": 69.99, "unit": "platter" } ] },
+            { "name": "Medium", "description": null, "size": "16\" Platter", "serves": "30 - 45 people", "prices": [ { "label": null, "amount": 119.99, "unit": "platter" } ] },
+            { "name": "Large", "description": null, "size": "18\" Platter", "serves": "45 - 60 people", "prices": [ { "label": null, "amount": 149.99, "unit": "platter" } ] }
+          ]
+        },
+        {
+          "name": "Custom Charcuterie Boards",
+          "note": "Ask about our custom charcuterie boards!",
+          "items": [
+            { "name": "Custom Charcuterie Board", "description": "Ask about our custom charcuterie boards!", "size": null, "serves": null, "prices": [ { "label": "Starting at", "amount": 129.99, "unit": "each", "is_starting_price": true } ] }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Wine Menu",
+      "page": 5,
+      "data_quality_warning": "In the source PDF every varietal below lists the SAME three wines at the same prices. This looks like unfinished placeholder content in the menu itself, not a parsing error. Verify against the real wine list before mailing.",
+      "sections": [
+        {
+          "name": "Red Wine - Pinot Noir",
+          "note": null,
+          "page": 5,
+          "items": [
+            { "name": "Elouan", "description": "Oregon", "size": null, "serves": null, "prices": [ { "label": null, "amount": 19.99, "unit": "each" } ] },
+            { "name": "Four Graces", "description": "California", "size": null, "serves": null, "prices": [ { "label": null, "amount": 22.99, "unit": "each" } ] },
+            { "name": "Cherry Pie", "description": "California", "size": null, "serves": null, "prices": [ { "label": null, "amount": 18.99, "unit": "each" } ] }
+          ]
+        },
+        {
+          "name": "Red Wine - Cabernet",
+          "note": null,
+          "page": 5,
+          "items": [
+            { "name": "Joel Gott", "description": null, "size": null, "serves": null, "prices": [ { "label": null, "amount": 12.99, "unit": "each" } ] },
+            { "name": "Four Graces", "description": "California", "size": null, "serves": null, "prices": [ { "label": null, "amount": 22.99, "unit": "each" } ] },
+            { "name": "Cherry Pie", "description": "California", "size": null, "serves": null, "prices": [ { "label": null, "amount": 18.99, "unit": "each" } ] }
+          ]
+        },
+        {
+          "name": "Red Wine - Italian Collection",
+          "note": null,
+          "page": 5,
+          "items": [
+            { "name": "Joel Gott", "description": null, "size": null, "serves": null, "prices": [ { "label": null, "amount": 12.99, "unit": "each" } ] },
+            { "name": "Four Graces", "description": "California", "size": null, "serves": null, "prices": [ { "label": null, "amount": 22.99, "unit": "each" } ] },
+            { "name": "Cherry Pie", "description": "California", "size": null, "serves": null, "prices": [ { "label": null, "amount": 18.99, "unit": "each" } ] }
+          ]
+        },
+        {
+          "name": "Red Wine - Palermo Family Favorites",
+          "note": null,
+          "page": 5,
+          "items": [
+            { "name": "Joel Gott", "description": null, "size": null, "serves": null, "prices": [ { "label": null, "amount": 12.99, "unit": "each" } ] },
+            { "name": "Four Graces", "description": "California", "size": null, "serves": null, "prices": [ { "label": null, "amount": 22.99, "unit": "each" } ] },
+            { "name": "Cherry Pie", "description": "California", "size": null, "serves": null, "prices": [ { "label": null, "amount": 18.99, "unit": "each" } ] }
+          ]
+        },
+        {
+          "name": "White Wine - Chardonnay",
+          "note": null,
+          "page": 6,
+          "items": [
+            { "name": "Elouan", "description": "Oregon", "size": null, "serves": null, "prices": [ { "label": null, "amount": 19.99, "unit": "each" } ] },
+            { "name": "Four Graces", "description": "California", "size": null, "serves": null, "prices": [ { "label": null, "amount": 22.99, "unit": "each" } ] },
+            { "name": "Cherry Pie", "description": "California", "size": null, "serves": null, "prices": [ { "label": null, "amount": 18.99, "unit": "each" } ] }
+          ]
+        },
+        {
+          "name": "White Wine - Sauvignon Blanc",
+          "note": null,
+          "page": 6,
+          "items": [
+            { "name": "Joel Gott", "description": null, "size": null, "serves": null, "prices": [ { "label": null, "amount": 12.99, "unit": "each" } ] },
+            { "name": "Four Graces", "description": "California", "size": null, "serves": null, "prices": [ { "label": null, "amount": 22.99, "unit": "each" } ] },
+            { "name": "Cherry Pie", "description": "California", "size": null, "serves": null, "prices": [ { "label": null, "amount": 18.99, "unit": "each" } ] }
+          ]
+        },
+        {
+          "name": "White Wine - Prosecco",
+          "note": null,
+          "page": 6,
+          "items": [
+            { "name": "Joel Gott", "description": null, "size": null, "serves": null, "prices": [ { "label": null, "amount": 12.99, "unit": "each" } ] },
+            { "name": "Four Graces", "description": "California", "size": null, "serves": null, "prices": [ { "label": null, "amount": 22.99, "unit": "each" } ] },
+            { "name": "Cherry Pie", "description": "California", "size": null, "serves": null, "prices": [ { "label": null, "amount": 18.99, "unit": "each" } ] }
+          ]
+        },
+        {
+          "name": "White Wine - Palermo Family Favorites",
+          "note": null,
+          "page": 6,
+          "items": [
+            { "name": "Joel Gott", "description": null, "size": null, "serves": null, "prices": [ { "label": null, "amount": 12.99, "unit": "each" } ] },
+            { "name": "Four Graces", "description": "California", "size": null, "serves": null, "prices": [ { "label": null, "amount": 22.99, "unit": "each" } ] },
+            { "name": "Cherry Pie", "description": "California", "size": null, "serves": null, "prices": [ { "label": null, "amount": 18.99, "unit": "each" } ] }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Appetizers & Platters",
+      "page": 7,
+      "sections": [
+        {
+          "name": "Cold Appetizer Platters",
+          "note": "Priced by tray size.",
+          "page": 7,
+          "items": [
+            { "name": "Shrimp Cocktail (Small 31-40)", "description": "Small 31-40 count shrimp", "size": null, "serves": null, "prices": [
+              { "label": "12\" Tray", "amount": 39.99, "unit": "platter", "serves": "10 - 15 people" },
+              { "label": "16\" Tray", "amount": 69.99, "unit": "platter", "serves": "20 - 30 people" },
+              { "label": "18\" Tray", "amount": 99.99, "unit": "platter", "serves": "35 - 50 people" }
+            ] },
+            { "name": "Shrimp Cocktail (Medium 21-25)", "description": "Medium 21-25 count shrimp", "size": null, "serves": null, "prices": [
+              { "label": "12\" Tray", "amount": 49.99, "unit": "platter", "serves": "10 - 15 people" },
+              { "label": "16\" Tray", "amount": 89.99, "unit": "platter", "serves": "20 - 30 people" },
+              { "label": "18\" Tray", "amount": 119.99, "unit": "platter", "serves": "35 - 50 people" }
+            ] },
+            { "name": "Shrimp Cocktail (Large 13-15)", "description": "Large 13-15 count shrimp", "size": null, "serves": null, "prices": [
+              { "label": "12\" Tray", "amount": 59.99, "unit": "platter", "serves": "10 - 15 people" },
+              { "label": "16\" Tray", "amount": 119.99, "unit": "platter", "serves": "20 - 30 people" },
+              { "label": "18\" Tray", "amount": 149.99, "unit": "platter", "serves": "35 - 50 people" }
+            ] },
+            { "name": "Antipasto", "description": null, "size": null, "serves": null, "prices": [
+              { "label": "12\" Tray", "amount": 69.99, "unit": "platter", "serves": "10 - 15 people" },
+              { "label": "16\" Tray", "amount": 89.99, "unit": "platter", "serves": "20 - 30 people" },
+              { "label": "18\" Tray", "amount": 109.95, "unit": "platter", "serves": "35 - 50 people" }
+            ] },
+            { "name": "Tomato Mozzarella", "description": "Caprese", "size": null, "serves": null, "prices": [
+              { "label": "12\" Tray", "amount": 59.99, "unit": "platter", "serves": "10 - 15 people" },
+              { "label": "16\" Tray", "amount": 79.99, "unit": "platter", "serves": "20 - 30 people" },
+              { "label": "18\" Tray", "amount": 99.99, "unit": "platter", "serves": "35 - 50 people" }
+            ] },
+            { "name": "Mini Mozzarella Kabobs", "description": "w/ Sundried Tomatoes", "size": null, "serves": null, "prices": [
+              { "label": "12\" Tray", "amount": 59.99, "unit": "platter", "serves": "10 - 15 people" },
+              { "label": "16\" Tray", "amount": 79.99, "unit": "platter", "serves": "20 - 30 people" },
+              { "label": "18\" Tray", "amount": 99.99, "unit": "platter", "serves": "35 - 50 people" }
+            ] },
+            { "name": "Seared Yellow Fin", "description": null, "size": null, "serves": null, "prices": [
+              { "label": "12\" Tray", "amount": 49.99, "unit": "platter", "serves": "10 - 15 people" },
+              { "label": "16\" Tray", "amount": 79.99, "unit": "platter", "serves": "20 - 30 people" }
+            ] },
+            { "name": "Greek Platter", "description": "w/ Hummus, Feta, Olives, Grape Leaves, Goat Cheese, Mini Pita Bread, Spinach Pie Mini's, & Tzatziki Sauce", "size": null, "serves": null, "prices": [
+              { "label": "12\" Tray", "amount": 49.99, "unit": "platter", "serves": "10 - 15 people" },
+              { "label": "16\" Tray", "amount": 89.99, "unit": "platter", "serves": "20 - 30 people" }
+            ] },
+            { "name": "Bread Baskets", "description": "Assorted Breads, Bread Sticks, Crostini's, etc.", "size": null, "serves": null, "prices": [
+              { "label": "Small", "amount": 19.99, "unit": "each" },
+              { "label": "Large", "amount": 39.99, "unit": "each" }
+            ] }
+          ]
+        },
+        {
+          "name": "Cold Cut Platters",
+          "note": "Priced per person. Choose a platter style from the Platter Choices below.",
+          "page": 8,
+          "items": [
+            { "name": "Cold Cut Platter Only", "description": "With lettuce, tomatoes, & pickles.", "size": null, "serves": null, "prices": [ { "label": null, "amount": 8.99, "unit": "per_person" } ] },
+            { "name": "Cold Cut Platter Including", "description": "With mustard, mayo, lettuce, onions, pickles, rolls & rye bread.", "size": null, "serves": null, "prices": [ { "label": null, "amount": 9.99, "unit": "per_person" } ] },
+            { "name": "Cold Cut Platter Deluxe", "description": "All the above plus bread, potato salad, macaroni salad, & coleslaw.", "size": null, "serves": null, "prices": [ { "label": null, "amount": 12.99, "unit": "per_person" } ], "note": "Source PDF labels this row 'COLD CUT PLATTER ONLY' again, which appears to be a typo in the menu; renamed to 'Deluxe' for clarity." }
+          ],
+          "platter_choices": [
+            { "name": "The American", "contents": [ "Boiled ham", "Roast turkey", "Roast beef", "Swiss cheese", "American cheese" ] },
+            { "name": "The New Yorker", "contents": [ "Roast turkey", "Corned beef", "Pastrami", "Swiss cheese" ] },
+            { "name": "The Italian", "contents": [ "Boiled ham", "Salami", "Mortadella", "Provolone", "Mozzarella" ] },
+            { "name": "The Supreme Italian", "contents": [ "Di Parma Prosciutto", "Soppressata Sweet & Hot", "Capocollo Sweet & Hot", "Mortadella", "Provolone" ] }
+          ]
+        },
+        {
+          "name": "Hot Appetizers",
+          "note": "Priced by piece count.",
+          "page": 9,
+          "items": [
+            { "name": "Mini Meatballs", "description": "w/ Marinara Sauce", "size": null, "serves": null, "prices": [
+              { "label": "25 pcs", "amount": 25.00, "unit": "per_pieces" },
+              { "label": "50 pcs", "amount": 50.00, "unit": "per_pieces" },
+              { "label": "75 pcs", "amount": 75.00, "unit": "per_pieces" },
+              { "label": "100 pcs", "amount": 100.00, "unit": "per_pieces" }
+            ] },
+            { "name": "Mini Sweet & Sour Meatballs", "description": null, "size": null, "serves": null, "prices": [
+              { "label": "25 pcs", "amount": 25.00, "unit": "per_pieces" },
+              { "label": "50 pcs", "amount": 50.00, "unit": "per_pieces" },
+              { "label": "75 pcs", "amount": 75.00, "unit": "per_pieces" },
+              { "label": "100 pcs", "amount": 100.00, "unit": "per_pieces" }
+            ] },
+            { "name": "Franks Cocktail In Pastry", "description": "w/ Deli Mustard", "size": null, "serves": null, "prices": [
+              { "label": "25 pcs", "amount": 25.00, "unit": "per_pieces" },
+              { "label": "50 pcs", "amount": 50.00, "unit": "per_pieces" },
+              { "label": "75 pcs", "amount": 75.00, "unit": "per_pieces" },
+              { "label": "100 pcs", "amount": 100.00, "unit": "per_pieces" }
+            ] },
+            { "name": "Spinach Puffs", "description": "w/ Deli Mustard", "size": null, "serves": null, "prices": [
+              { "label": "25 pcs", "amount": 25.00, "unit": "per_pieces" },
+              { "label": "50 pcs", "amount": 50.00, "unit": "per_pieces" },
+              { "label": "75 pcs", "amount": 75.00, "unit": "per_pieces" },
+              { "label": "100 pcs", "amount": 100.00, "unit": "per_pieces" }
+            ] }
+          ]
+        },
+        {
+          "name": "Empanadas",
+          "note": null,
+          "page": 9,
+          "items": [
+            { "name": "Chicken Empanadas", "description": "2 for $5.00", "size": null, "serves": null, "prices": [ { "label": "2 for", "amount": 5.00, "unit": "each" } ] },
+            { "name": "Beef Empanadas", "description": "2 for $5.00", "size": null, "serves": null, "prices": [ { "label": "2 for", "amount": 5.00, "unit": "each" } ] }
+          ]
+        },
+        {
+          "name": "Chicken Wings",
+          "note": "All wing flavors share the same piece-count pricing.",
+          "page": 10,
+          "items": [
+            { "name": "Crispy Battered", "description": "w/ BBQ or Blue Cheese", "size": null, "serves": null, "prices": [
+              { "label": "25 pcs", "amount": 35.00, "unit": "per_pieces" },
+              { "label": "50 pcs", "amount": 70.00, "unit": "per_pieces" },
+              { "label": "75 pcs", "amount": 105.00, "unit": "per_pieces" },
+              { "label": "100 pcs", "amount": 140.00, "unit": "per_pieces" }
+            ] },
+            { "name": "Crispy Battered Spicy", "description": "w/ BBQ or Blue Cheese", "size": null, "serves": null, "prices": [
+              { "label": "25 pcs", "amount": 35.00, "unit": "per_pieces" },
+              { "label": "50 pcs", "amount": 70.00, "unit": "per_pieces" },
+              { "label": "75 pcs", "amount": 105.00, "unit": "per_pieces" },
+              { "label": "100 pcs", "amount": 140.00, "unit": "per_pieces" }
+            ] },
+            { "name": "Grilled Teriyaki", "description": "w/ Teriyaki Sauce", "size": null, "serves": null, "prices": [
+              { "label": "25 pcs", "amount": 35.00, "unit": "per_pieces" },
+              { "label": "50 pcs", "amount": 70.00, "unit": "per_pieces" },
+              { "label": "75 pcs", "amount": 105.00, "unit": "per_pieces" },
+              { "label": "100 pcs", "amount": 140.00, "unit": "per_pieces" }
+            ] },
+            { "name": "Sweet Chili", "description": "w/ Tahini Sauce", "size": null, "serves": null, "prices": [
+              { "label": "25 pcs", "amount": 35.00, "unit": "per_pieces" },
+              { "label": "50 pcs", "amount": 70.00, "unit": "per_pieces" },
+              { "label": "75 pcs", "amount": 105.00, "unit": "per_pieces" },
+              { "label": "100 pcs", "amount": 140.00, "unit": "per_pieces" }
+            ] },
+            { "name": "Lemon Rosemary", "description": "w/ Pesto Cream Sauce", "size": null, "serves": null, "prices": [
+              { "label": "25 pcs", "amount": 35.00, "unit": "per_pieces" },
+              { "label": "50 pcs", "amount": 70.00, "unit": "per_pieces" },
+              { "label": "75 pcs", "amount": 105.00, "unit": "per_pieces" },
+              { "label": "100 pcs", "amount": 140.00, "unit": "per_pieces" }
+            ] },
+            { "name": "Honey Mustard Wings", "description": "w/ Roasted Pepper Sauce", "size": null, "serves": null, "prices": [
+              { "label": "25 pcs", "amount": 35.00, "unit": "per_pieces" },
+              { "label": "50 pcs", "amount": 70.00, "unit": "per_pieces" },
+              { "label": "75 pcs", "amount": 105.00, "unit": "per_pieces" },
+              { "label": "100 pcs", "amount": 140.00, "unit": "per_pieces" }
+            ] },
+            { "name": "BBQ", "description": "w/ Marinara Sauce", "size": null, "serves": null, "prices": [
+              { "label": "25 pcs", "amount": 35.00, "unit": "per_pieces" },
+              { "label": "50 pcs", "amount": 70.00, "unit": "per_pieces" },
+              { "label": "75 pcs", "amount": 105.00, "unit": "per_pieces" },
+              { "label": "100 pcs", "amount": 140.00, "unit": "per_pieces" }
+            ] },
+            { "name": "Buffalo", "description": null, "size": null, "serves": null, "prices": [
+              { "label": "25 pcs", "amount": 35.00, "unit": "per_pieces" },
+              { "label": "50 pcs", "amount": 70.00, "unit": "per_pieces" },
+              { "label": "75 pcs", "amount": 105.00, "unit": "per_pieces" },
+              { "label": "100 pcs", "amount": 140.00, "unit": "per_pieces" }
+            ] }
+          ]
+        },
+        {
+          "name": "Chicken Tenders",
+          "note": null,
+          "page": 10,
+          "items": [
+            { "name": "Breaded Chicken Tenders", "description": "w/ Ketchup or BBQ Sauce", "size": null, "serves": null, "prices": [
+              { "label": "25 pcs", "amount": 40.00, "unit": "per_pieces" },
+              { "label": "50 pcs", "amount": 80.00, "unit": "per_pieces" },
+              { "label": "75 pcs", "amount": 120.00, "unit": "per_pieces" },
+              { "label": "100 pcs", "amount": 160.00, "unit": "per_pieces" }
+            ] },
+            { "name": "Sesame Chicken Tenders", "description": "w/ Ketchup or BBQ Sauce", "size": null, "serves": null, "prices": [
+              { "label": "25 pcs", "amount": 40.00, "unit": "per_pieces" },
+              { "label": "50 pcs", "amount": 80.00, "unit": "per_pieces" },
+              { "label": "75 pcs", "amount": 120.00, "unit": "per_pieces" },
+              { "label": "100 pcs", "amount": 160.00, "unit": "per_pieces" }
+            ] },
+            { "name": "Coconut Chicken Tenders", "description": "w/ Sesame Ginger Sauce", "size": null, "serves": null, "prices": [
+              { "label": "25 pcs", "amount": 40.00, "unit": "per_pieces" },
+              { "label": "50 pcs", "amount": 80.00, "unit": "per_pieces" },
+              { "label": "75 pcs", "amount": 120.00, "unit": "per_pieces" },
+              { "label": "100 pcs", "amount": 160.00, "unit": "per_pieces" }
+            ] }
+          ]
+        },
+        {
+          "name": "Rollups",
+          "note": "Made with all natural Flour Tortillas. Assorted Flavors: Sun-Dried Tomato, Spinach, & Whole Wheat. Cut in 1/2's or 1/3's.",
+          "page": 11,
+          "items": [
+            { "name": "Ham & Swiss", "description": null, "size": null, "serves": null, "prices": [ { "label": null, "amount": 11.99, "unit": "each" } ] },
+            { "name": "Turkey & Swiss", "description": null, "size": null, "serves": null, "prices": [ { "label": null, "amount": 11.99, "unit": "each" } ] },
+            { "name": "Tuna Salad", "description": "Albacore White Solid Tuna, made in house", "size": null, "serves": null, "prices": [ { "label": null, "amount": 11.99, "unit": "each" } ] },
+            { "name": "Egg Salad", "description": "Made in house with cage free eggs, tomato and lettuce", "size": null, "serves": null, "prices": [ { "label": null, "amount": 11.99, "unit": "each" } ] },
+            { "name": "Chicken Salad", "description": null, "size": null, "serves": null, "prices": [ { "label": null, "amount": 11.99, "unit": "each" } ] },
+            { "name": "Roasted Pepper & Mozzarella", "description": null, "size": null, "serves": null, "prices": [ { "label": null, "amount": 11.99, "unit": "each" } ] },
+            { "name": "Grilled Chicken Caesar", "description": null, "size": null, "serves": null, "prices": [ { "label": null, "amount": 11.99, "unit": "each" } ] },
+            { "name": "Grilled Vegetables", "description": null, "size": null, "serves": null, "prices": [ { "label": null, "amount": 11.99, "unit": "each" } ] },
+            { "name": "Grilled Salmon", "description": null, "size": null, "serves": null, "prices": [ { "label": null, "amount": 11.99, "unit": "each" } ] }
+          ]
+        },
+        {
+          "name": "Pinwheels",
+          "note": "Garnish Trays available in 12\", 16\" and 18\".",
+          "page": 11,
+          "items": [
+            { "name": "Nova & Cream Cheese", "description": null, "size": null, "serves": null, "prices": [
+              { "label": "12\"", "amount": 49.99, "unit": "platter" },
+              { "label": "16\"", "amount": 59.99, "unit": "platter" }
+            ] },
+            { "name": "Salami & Cheese", "description": null, "size": null, "serves": null, "prices": [
+              { "label": "12\"", "amount": 49.99, "unit": "platter" },
+              { "label": "16\"", "amount": 59.99, "unit": "platter" }
+            ] },
+            { "name": "Asparagus & Prosciutto", "description": null, "size": null, "serves": null, "prices": [
+              { "label": "12\"", "amount": 59.99, "unit": "platter" },
+              { "label": "16\"", "amount": 69.99, "unit": "platter" }
+            ] },
+            { "name": "Turkey & Swiss", "description": null, "size": null, "serves": null, "prices": [
+              { "label": "12\"", "amount": 49.99, "unit": "platter" },
+              { "label": "16\"", "amount": 59.99, "unit": "platter" }
+            ] }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Main Entrees",
+      "page": 12,
+      "sections": [
+        {
+          "name": "2' Heros",
+          "note": "$24.99 per foot. All subs come with lettuce and tomato on the sub; mayonnaise, mustard or Italian dressing on the side. Other varieties available at exchanges. Cut in 1/8's or 1/16's. Prices may vary.",
+          "page": 12,
+          "items": [
+            { "name": "The New Yorker", "description": "Roasted Turkey, Corned Beef, Pastrami & Swiss", "size": null, "serves": null, "prices": [ { "label": null, "amount": 24.99, "unit": "per_foot" } ] },
+            { "name": "The American Classic", "description": "Turkey, Ham, Roast Beef & American Cheese", "size": null, "serves": null, "prices": [ { "label": null, "amount": 24.99, "unit": "per_foot" } ] },
+            { "name": "The Italian", "description": "Boiled Ham, Ham Capicola, Genoa, Salami, Mortadella, Provolone & Mozzarella", "size": null, "serves": null, "prices": [ { "label": null, "amount": 24.99, "unit": "per_foot" } ] },
+            { "name": "Grilled Vegetables", "description": "Asparagus, Eggplant, Yellow Squash, Zucchini, Mushroom & Peppers", "size": null, "serves": null, "prices": [ { "label": null, "amount": 24.99, "unit": "per_foot" } ] },
+            { "name": "Chicken Salad", "description": "In house made, all white meat", "size": null, "serves": null, "prices": [ { "label": null, "amount": 24.99, "unit": "per_foot" } ] },
+            { "name": "Tuna Salad", "description": "In house made white solid albacore", "size": null, "serves": null, "prices": [ { "label": null, "amount": 24.99, "unit": "per_foot" } ] },
+            { "name": "Egg Salad", "description": "In house made cage free eggs", "size": null, "serves": null, "prices": [ { "label": null, "amount": 24.99, "unit": "per_foot" } ] }
+          ]
+        },
+        {
+          "name": "Sandwiches & Ciabatta",
+          "note": null,
+          "page": 12,
+          "items": [
+            { "name": "Ciabatta Bread Hero 16\" Platter", "description": "Cut in 8 pieces with lettuce, tomatoes, onion garnish with condiments Mayo & Mustard, etc.", "size": "16\" Platter", "serves": null, "prices": [ { "label": null, "amount": 29.99, "unit": "each" } ] },
+            { "name": "Sandwiches", "description": "Cut in 1/2, assorted rye bread or others. Your choice of Tuna Salad, Chicken Salad, Egg Salad, Ham, Cheese, Roast Beef, Turkey and many more. With lettuce, tomatoes, pickles, mayo & mustard.", "size": null, "serves": null, "prices": [ { "label": null, "amount": 8.99, "unit": "each" } ] }
+          ]
+        },
+        {
+          "name": "Pasta Entrees",
+          "note": "Half pan feeds 10-12 people; full pan feeds 20-25 people.",
+          "page": 13,
+          "items": [
+            { "name": "Penne Ala Vodka", "description": null, "size": null, "serves": null, "prices": [ { "label": "1/2 Pan", "amount": 49.99, "unit": "platter", "serves": "10 - 12 people" }, { "label": "Full Pan", "amount": 89.99, "unit": "platter", "serves": "20 - 25 people" } ] },
+            { "name": "Penne Ala Vodka w/ Spinach", "description": null, "size": null, "serves": null, "prices": [ { "label": "1/2 Pan", "amount": 49.99, "unit": "platter", "serves": "10 - 12 people" }, { "label": "Full Pan", "amount": 89.99, "unit": "platter", "serves": "20 - 25 people" } ] },
+            { "name": "Penne w/ Broccoli Rabe", "description": null, "size": null, "serves": null, "prices": [ { "label": "1/2 Pan", "amount": 49.99, "unit": "platter", "serves": "10 - 12 people" }, { "label": "Full Pan", "amount": 79.99, "unit": "platter", "serves": "20 - 25 people" } ] },
+            { "name": "Penne w/ Veggies", "description": null, "size": null, "serves": null, "prices": [ { "label": "1/2 Pan", "amount": 49.99, "unit": "platter", "serves": "10 - 12 people" }, { "label": "Full Pan", "amount": 79.99, "unit": "platter", "serves": "20 - 25 people" } ] },
+            { "name": "Penne w/ Chicken & Spinach", "description": null, "size": null, "serves": null, "prices": [ { "label": "1/2 Pan", "amount": 49.99, "unit": "platter", "serves": "10 - 12 people" }, { "label": "Full Pan", "amount": 89.99, "unit": "platter", "serves": "20 - 25 people" } ] },
+            { "name": "Penne w/ Shrimp & Asparagus", "description": null, "size": null, "serves": null, "prices": [ { "label": "1/2 Pan", "amount": 59.99, "unit": "platter", "serves": "10 - 12 people" }, { "label": "Full Pan", "amount": 89.99, "unit": "platter", "serves": "20 - 25 people" } ] },
+            { "name": "Penne w/ Shrimp and Spinach", "description": null, "size": null, "serves": null, "prices": [ { "label": "1/2 Pan", "amount": 59.99, "unit": "platter", "serves": "10 - 12 people" }, { "label": "Full Pan", "amount": 89.99, "unit": "platter", "serves": "20 - 25 people" } ] },
+            { "name": "Rigatoni Bolognese", "description": null, "size": null, "serves": null, "prices": [ { "label": "1/2 Pan", "amount": 49.99, "unit": "platter", "serves": "10 - 12 people" }, { "label": "Full Pan", "amount": 89.99, "unit": "platter", "serves": "20 - 25 people" } ] },
+            { "name": "Rigatoni w/ Broccoli", "description": null, "size": null, "serves": null, "prices": [ { "label": "1/2 Pan", "amount": 49.99, "unit": "platter", "serves": "10 - 12 people" }, { "label": "Full Pan", "amount": 89.99, "unit": "platter", "serves": "20 - 25 people" } ] },
+            { "name": "Stuffed Shells", "description": null, "size": null, "serves": null, "prices": [ { "label": "1/2 Pan", "amount": 49.99, "unit": "platter", "serves": "10 - 12 people" }, { "label": "Full Pan", "amount": 89.99, "unit": "platter", "serves": "20 - 25 people" } ] },
+            { "name": "Baked Ziti", "description": null, "size": null, "serves": null, "prices": [ { "label": "1/2 Pan", "amount": 49.99, "unit": "platter", "serves": "10 - 12 people" }, { "label": "Full Pan", "amount": 89.99, "unit": "platter", "serves": "20 - 25 people" } ] },
+            { "name": "Three Cheese Lasagna", "description": null, "size": null, "serves": null, "prices": [ { "label": "1/2 Pan", "amount": 44.99, "unit": "platter", "serves": "10 - 12 people" }, { "label": "Full Pan", "amount": 79.99, "unit": "platter", "serves": "20 - 25 people" } ] },
+            { "name": "Spinach Lasagna", "description": null, "size": null, "serves": null, "prices": [ { "label": "1/2 Pan", "amount": 44.99, "unit": "platter", "serves": "10 - 12 people" }, { "label": "Full Pan", "amount": 79.99, "unit": "platter", "serves": "20 - 25 people" } ] },
+            { "name": "Meat Lasagna", "description": null, "size": null, "serves": null, "prices": [ { "label": "1/2 Pan", "amount": 59.99, "unit": "platter", "serves": "10 - 12 people" }, { "label": "Full Pan", "amount": 99.99, "unit": "platter", "serves": "20 - 25 people" } ] }
+          ]
+        },
+        {
+          "name": "Without Pasta",
+          "note": "Half pan feeds 10-12 people; full pan feeds 20-25 people.",
+          "page": 13,
+          "items": [
+            { "name": "Mamma's Meatballs", "description": null, "size": null, "serves": null, "prices": [ { "label": "1/2 Pan", "amount": 49.99, "unit": "platter", "serves": "10 - 12 people" }, { "label": "Full Pan", "amount": 89.99, "unit": "platter", "serves": "20 - 25 people" } ] },
+            { "name": "Sausage & Peppers", "description": null, "size": null, "serves": null, "prices": [ { "label": "1/2 Pan", "amount": 49.99, "unit": "platter", "serves": "10 - 12 people" }, { "label": "Full Pan", "amount": 89.99, "unit": "platter", "serves": "20 - 25 people" } ] },
+            { "name": "Eggplant Parmesan", "description": null, "size": null, "serves": null, "prices": [ { "label": "1/2 Pan", "amount": 49.99, "unit": "platter", "serves": "10 - 12 people" }, { "label": "Full Pan", "amount": 89.99, "unit": "platter", "serves": "20 - 25 people" } ] },
+            { "name": "Eggplant Rollatini", "description": null, "size": null, "serves": null, "prices": [ { "label": "1/2 Pan", "amount": 54.99, "unit": "platter", "serves": "10 - 12 people" }, { "label": "Full Pan", "amount": 99.99, "unit": "platter", "serves": "20 - 25 people" } ] },
+            { "name": "Seafood Paella", "description": null, "size": null, "serves": null, "prices": [ { "label": "1/2 Pan", "amount": 79.99, "unit": "platter", "serves": "10 - 12 people" }, { "label": "Full Pan", "amount": 129.99, "unit": "platter", "serves": "20 - 25 people" } ] }
+          ]
+        },
+        {
+          "name": "Chicken Entrees",
+          "note": "All chicken entrees share the same pricing. Half pan feeds 10-12 people; full pan feeds 20-25 people.",
+          "page": 13,
+          "items": [
+            { "name": "Chicken Marsala", "description": null, "size": null, "serves": null, "prices": [ { "label": "1/2 Pan", "amount": 69.99, "unit": "platter", "serves": "10 - 12 people" }, { "label": "Full Pan", "amount": 119.99, "unit": "platter", "serves": "20 - 25 people" } ] },
+            { "name": "Chicken Franchaise", "description": null, "size": null, "serves": null, "prices": [ { "label": "1/2 Pan", "amount": 69.99, "unit": "platter", "serves": "10 - 12 people" }, { "label": "Full Pan", "amount": 119.99, "unit": "platter", "serves": "20 - 25 people" } ] },
+            { "name": "Chicken Picatta", "description": null, "size": null, "serves": null, "prices": [ { "label": "1/2 Pan", "amount": 69.99, "unit": "platter", "serves": "10 - 12 people" }, { "label": "Full Pan", "amount": 119.99, "unit": "platter", "serves": "20 - 25 people" } ] },
+            { "name": "Grilled Chicken Pineapple", "description": null, "size": null, "serves": null, "prices": [ { "label": "1/2 Pan", "amount": 69.99, "unit": "platter", "serves": "10 - 12 people" }, { "label": "Full Pan", "amount": 119.99, "unit": "platter", "serves": "20 - 25 people" } ] },
+            { "name": "Grilled Chicken Lemon Herb", "description": null, "size": null, "serves": null, "prices": [ { "label": "1/2 Pan", "amount": 69.99, "unit": "platter", "serves": "10 - 12 people" }, { "label": "Full Pan", "amount": 119.99, "unit": "platter", "serves": "20 - 25 people" } ] },
+            { "name": "Grilled Chicken Balsamic", "description": null, "size": null, "serves": null, "prices": [ { "label": "1/2 Pan", "amount": 69.99, "unit": "platter", "serves": "10 - 12 people" }, { "label": "Full Pan", "amount": 119.99, "unit": "platter", "serves": "20 - 25 people" } ] },
+            { "name": "Grilled Chicken Cacciatore", "description": null, "size": null, "serves": null, "prices": [ { "label": "1/2 Pan", "amount": 69.99, "unit": "platter", "serves": "10 - 12 people" }, { "label": "Full Pan", "amount": 119.99, "unit": "platter", "serves": "20 - 25 people" } ] }
+          ]
+        },
+        {
+          "name": "Meat Entrees",
+          "note": "Prime Rib and Filet Mignon appear on the menu page but their prices are rendered inside the page artwork and were not present in the text layer. Confirm before mailing.",
+          "page": 13,
+          "items": [
+            { "name": "Roasted Prime Rib", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Roasted Filet Mignon", "description": "Served hot, with shallots & mushrooms", "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Filet Mignon Platter", "description": "Thinly sliced, served with horseradish sauce & crostini.", "size": "16\" platter, 3 1/2 lbs", "serves": null, "prices": [ { "label": "per platter", "amount": 159.99, "unit": "platter" } ] }
+          ]
+        },
+        {
+          "name": "Side Dishes",
+          "note": "10 person minimum.",
+          "page": 14,
+          "items": [
+            { "name": "Potato Salad", "description": null, "size": "4 lb. Tray", "serves": null, "prices": [ { "label": null, "amount": 19.99, "unit": "platter" } ] },
+            { "name": "Cole Slaw", "description": null, "size": "4 lb. Tray", "serves": null, "prices": [ { "label": null, "amount": 19.99, "unit": "platter" } ] },
+            { "name": "Baked Beans", "description": null, "size": "4 lb. Tray", "serves": null, "prices": [ { "label": null, "amount": 19.99, "unit": "platter" } ] },
+            { "name": "Corn on the Cob", "description": null, "size": "1/2 Ears, 12 pcs.", "serves": null, "prices": [ { "label": null, "amount": 15.99, "unit": "platter" } ] },
+            { "name": "Roasted Corn", "description": null, "size": "1/2 Ears, 12 pcs.", "serves": null, "prices": [ { "label": null, "amount": 15.99, "unit": "platter" } ] },
+            { "name": "Bow Tie Pasta", "description": null, "size": "3 lb. Tray", "serves": null, "prices": [ { "label": null, "amount": 19.99, "unit": "platter" } ] },
+            { "name": "Dinner Rolls", "description": null, "size": "12 pcs.", "serves": null, "prices": [ { "label": null, "amount": 5.99, "unit": "platter" } ] },
+            { "name": "Baked Potato", "description": null, "size": "5 pcs. cut in 1/2's", "serves": null, "prices": [ { "label": null, "amount": 24.99, "unit": "platter" } ] },
+            { "name": "Homemade Guacamole", "description": null, "size": "1 Quart", "serves": null, "prices": [ { "label": null, "amount": 24.99, "unit": "platter" } ] },
+            { "name": "Homemade Salsa", "description": null, "size": "1 Quart", "serves": null, "prices": [ { "label": null, "amount": 22.99, "unit": "platter" } ] },
+            { "name": "Homemade Black Bean Salsa", "description": null, "size": "1 Quart", "serves": null, "prices": [ { "label": null, "amount": 22.99, "unit": "platter" } ] },
+            { "name": "Homemade Mango Salsa", "description": null, "size": "1 Quart", "serves": null, "prices": [ { "label": null, "amount": 22.99, "unit": "platter" } ] }
+          ]
+        },
+        {
+          "name": "Side Dishes - Priced by the Pound",
+          "note": null,
+          "page": 14,
+          "items": [
+            { "name": "String Beans", "description": null, "size": null, "serves": null, "prices": [ { "label": null, "amount": 6.99, "unit": "per_lb" } ] },
+            { "name": "Roasted Red Potatoes", "description": null, "size": null, "serves": null, "prices": [ { "label": null, "amount": 5.99, "unit": "per_lb" } ] },
+            { "name": "Acorn Squash", "description": null, "size": null, "serves": null, "prices": [ { "label": null, "amount": 4.99, "unit": "per_lb" } ] },
+            { "name": "Butternut Squash", "description": null, "size": null, "serves": null, "prices": [ { "label": null, "amount": 4.99, "unit": "per_lb" } ] },
+            { "name": "Mashed Potatoes", "description": null, "size": null, "serves": null, "prices": [ { "label": null, "amount": 4.99, "unit": "per_lb" } ] },
+            { "name": "Mashed Sweet Potatoes", "description": null, "size": null, "serves": null, "prices": [ { "label": null, "amount": 5.99, "unit": "per_lb" } ] },
+            { "name": "Baked Sweet Potatoes", "description": null, "size": null, "serves": null, "prices": [ { "label": null, "amount": 4.99, "unit": "per_lb" } ] }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Seafood",
+      "page": 15,
+      "sections": [
+        {
+          "name": "Smoked Fish Platters",
+          "note": "All fish platters come complete with sliced Nova, de-boned Whitefish, Whitefish Salad, Baked Salmon, Creamed Herring & Sliced Sable. Subject to availability. All trays include 2 bagels per person, 2 kinds of cream cheese, lettuce, tomato, olives, onions & cucumbers.",
+          "page": 15,
+          "items": [
+            { "name": "Smoked Fish Platter (All Trays)", "description": "All trays include 2 bagels per person, 2 kinds of cream cheese, lettuce, tomato, olives, onions & cucumbers.", "size": null, "serves": null, "prices": [ { "label": null, "amount": 19.99, "unit": "per_person" } ] },
+            { "name": "Poached Salmon", "description": "Beautifully decorated with cucumbers, lettuce, and/or lemon, served with a sour cream dill sauce!", "size": "3oz, 4oz, 5oz", "serves": null, "prices": [ { "label": null, "amount": 18.99, "unit": "per_lb" } ] }
+          ]
+        },
+        {
+          "name": "Salmon Specialities",
+          "note": null,
+          "page": 16,
+          "items": [
+            { "name": "Poached Salmon", "description": "Served with lettuce, cucumbers, lemons & tzatziki dill sauce.", "size": "2lb, 2 1/2lb, 3lb, 3 1/2lb", "serves": null, "prices": [ { "label": null, "amount": 18.99, "unit": "per_lb" } ] },
+            { "name": "Poached Salmon Individuals", "description": "Served at room temperature with lettuce, lemons, & tzatziki sauce.", "size": "2oz, 3oz, 4oz, 5oz, 6oz", "serves": null, "prices": [ { "label": null, "amount": 18.99, "unit": "per_lb" } ] },
+            { "name": "Grilled Salmon", "description": "S.O.S. with teriyaki sauce or orange glaze & orange slices. Served hot or cold.", "size": "3oz, 4oz, 5oz, 6oz", "serves": null, "prices": [ { "label": null, "amount": 18.99, "unit": "per_lb" } ] },
+            { "name": "Stuffed Salmon w/ Crab Meat & Spinach", "description": "Baked, lemon & white wine broth. Served in foil pan to reheat.", "size": "5oz, 6oz, 7oz", "serves": null, "prices": [ { "label": null, "amount": 18.99, "unit": "per_lb" } ] },
+            { "name": "Baked Salmon Oreganata", "description": "Baked with white wine, lemon juice, butter, olive oil with a bread crumb topping. Served in foil pan to reheat. Includes lemon slices & parsley.", "size": "3oz, 4oz, 5oz, 6oz", "serves": null, "prices": [ { "label": null, "amount": 18.99, "unit": "per_lb" } ] }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Desserts",
+      "page": 17,
+      "data_quality_warning": "Cakes, mini cakes, cookies, pastries, cheesecakes, tarts and pies are listed by name only in the source PDF - no prices are printed for them. Only the Cookie & Cake Platters and Mini Pastry Platters carry prices.",
+      "sections": [
+        {
+          "name": "Cakes",
+          "note": "No prices printed on the menu.",
+          "page": 17,
+          "items": [
+            { "name": "Chocolate Raspberry Cake", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Chocolate Decadent Cake", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Chocolate Mousse Cake", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Limoncello Cake", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Black Forest Cake", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Almond Tiramisu", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Mocha Cake", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Red Velvet", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Carrot Cake", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Strawberry Shortcake", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Triple Chocolate Mousse", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "White Chocolate Raspberry", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" }
+          ]
+        },
+        {
+          "name": "Mini Cakes",
+          "note": "No prices printed on the menu.",
+          "page": 17,
+          "items": [
+            { "name": "Chocolate Heart Cake", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Strawberry Chocolate Heart Cake", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Lemon Mousse Cake", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Baby Chocolate Mousse Cake", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Baby Strawberry Shortcake", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Crumb Cake", "description": "Raspberry, Chocolate, or Plain", "size": null, "serves": null, "prices": [], "price_status": "unpriced" }
+          ]
+        },
+        {
+          "name": "Cookies",
+          "note": "No prices printed on the menu.",
+          "page": 17,
+          "items": [
+            { "name": "Mini Linzer Tart", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Italian Wedding Cookie", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Pistachio & Strawberry", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Leaf", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Florentine", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Black & White Cookies", "description": "Available small or large", "size": "SM/LG", "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Chocolate Chip", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Rainbow Cookies", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Rugallah", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Biscotti Cookies", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Birthday Cake Cookies", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Butter Cookies", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Assorted Hamantash", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" }
+          ]
+        },
+        {
+          "name": "Pastries",
+          "note": "No prices printed on the menu.",
+          "page": 18,
+          "items": [
+            { "name": "Tiramisu", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Chocolate Mousse", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Napoleon", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Almond Tiramisu", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Key Lime Mousse", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Brownies", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "French Layer", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Eclairs", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Eclair w/ Fruits", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Cream Puffs", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Cannolis", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Lobster Tail", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Cinnamon Buns", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Scones", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Danish Pastry", "description": "Assorted", "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Croissants", "description": "Assorted", "size": null, "serves": null, "prices": [], "price_status": "unpriced" }
+          ]
+        },
+        {
+          "name": "Cheese Cakes",
+          "note": "No prices printed on the menu.",
+          "page": 18,
+          "items": [
+            { "name": "NY Cheesecake", "description": "Made with cream cheese", "size": "6 in", "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Italian Cheesecake", "description": "Made with ricotta", "size": "6 in", "serves": null, "prices": [], "price_status": "unpriced" }
+          ]
+        },
+        {
+          "name": "Tarts",
+          "note": "No prices printed on the menu.",
+          "page": 18,
+          "items": [
+            { "name": "Blueberry", "description": "Baked Tart", "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Raspberry", "description": "Baked Tart", "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Apple", "description": "Baked Tart", "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Blackberry", "description": "Baked Tart", "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Strawberry", "description": "Baked Tart", "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Pecan", "description": "Baked Tart", "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Apple Almond", "description": "Large Tart", "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Pear Pecan", "description": "Large Tart", "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Orange Ricotta", "description": "Large Tart", "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Plum Ricotta", "description": "Large Tart", "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Apple Tarte Tatin", "description": "Large Tart", "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Berry Tarts", "description": "Large Tart", "size": null, "serves": null, "prices": [], "price_status": "unpriced" }
+          ]
+        },
+        {
+          "name": "Pies",
+          "note": "No prices printed on the menu. Ask about No Sugar Added & Vegan options!",
+          "page": 18,
+          "items": [
+            { "name": "Keylime Pie", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Peach Pie", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Apple Pie", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Blueberry Pie", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Strawberry Blueberry", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Apple Dutch", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Blueberry Crunch", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" },
+            { "name": "Cherry Pie", "description": null, "size": null, "serves": null, "prices": [], "price_status": "unpriced" }
+          ]
+        },
+        {
+          "name": "Cookie & Cake Platters",
+          "note": "All platters come with Chocolate Russian Coffee Cake, Raspberry Russian Coffee Cake, Apricot Russian Coffee Cake, Assorted Rugalah and Butter Cookies.",
+          "page": 19,
+          "items": [
+            { "name": "Small", "description": null, "size": "12\" Platter, 3 - 4 lbs.", "serves": "20 people", "prices": [ { "label": null, "amount": 39.99, "unit": "platter" } ] },
+            { "name": "Medium", "description": null, "size": "16\" Platter, 5 - 6 lbs.", "serves": "35 - 40 people", "prices": [ { "label": null, "amount": 59.99, "unit": "platter" } ] },
+            { "name": "Large", "description": null, "size": "18\" Platter, 8 - 9 lbs.", "serves": "40+ people", "prices": [ { "label": null, "amount": 89.99, "unit": "platter" } ] }
+          ]
+        },
+        {
+          "name": "Mini Pastry Platters",
+          "note": "All platters come with your choice of mini pastries: Mini Canolis, Mini Eclairs, Cream Puffs, Chocolate Covered Strawberries, Brownies. Priced at $1.99 per pastry.",
+          "page": 19,
+          "items": [
+            { "name": "Small", "description": "Choice of mini pastries", "size": "12\" Platter, 18 pcs.", "serves": null, "prices": [ { "label": "18 pcs @ $1.99 ea", "amount": 1.99, "unit": "per_pastry", "computed_total": 35.82 } ] },
+            { "name": "Medium", "description": "Choice of mini pastries", "size": "16\" Platter, 36 pcs.", "serves": null, "prices": [ { "label": "36 pcs @ $1.99 ea", "amount": 1.99, "unit": "per_pastry", "computed_total": 71.64 } ] },
+            { "name": "Large", "description": "Choice of mini pastries", "size": "18\" Platter, 48 pcs.", "serves": null, "prices": [ { "label": "48 pcs @ $1.99 ea", "amount": 1.99, "unit": "per_pastry", "computed_total": 95.52 } ] }
+          ]
+        },
+        {
+          "name": "Custom Cakes",
+          "note": "Let us help you celebrate your special event or occasion. Completely customize your cake by contacting Bakery@boysmkt.com.",
+          "page": 20,
+          "items": [],
+          "cake_flavors": [ "Chocolate Cake", "Vanilla Cake", "Red Velvet Cake", "Carrot Cake" ],
+          "fillings_and_frostings": [ "Vanilla Buttercream", "Chocolate Frosting", "Chocolate Mousse", "Strawberry Filling", "Raspberry Filling", "Blueberry Filling", "Pineapple Filling", "Orange Filling", "Lemon Filling", "Cream Cheese Frosting" ]
+        }
+      ]
+    }
+  ],
+  "extraction_notes": [
+    "Parsed from the source PDF with LlamaParse tier 'agentic_plus' (the highest tier), job pjb-3nn7lwrl72nzzaqx5yz8kbr24dhc.",
+    "WINE MENU: every varietal in the source lists the same three wines (Joel Gott $12.99 / Four Graces $22.99 / Cherry Pie $18.99, plus Elouan $19.99 under Pinot Noir and Chardonnay). This repetition is present in the PDF itself and looks like unfinished placeholder content - it is not a parsing artifact.",
+    "DESSERTS: cakes, mini cakes, cookies, pastries, cheesecakes, tarts and pies carry no printed prices in the source. They are included with prices: [] and price_status 'unpriced'.",
+    "MEAT ENTREES: 'Roasted Prime Rib' and 'Roasted Filet Mignon' appear as headings but their prices live in the page artwork, not the text layer. Marked 'unpriced'.",
+    "COLD CUT PLATTERS: the $12.99 row is labelled 'COLD CUT PLATTER ONLY' in the source, duplicating the $8.99 row's name. Renamed to 'Cold Cut Platter Deluxe' for clarity; original wording noted on the item.",
+    "The Table of Contents lists a 'Salads' section on page 11, but no salad items appear on that page in the source PDF - only Rollups and Pinwheels. Nothing was dropped in parsing; the section appears to be absent from the menu.",
+    "MINI PASTRY PLATTERS are priced per pastry ($1.99); 'computed_total' is derived from the printed piece count and is not printed on the menu."
+  ]
+}
