@@ -1,6 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { useCart, saveQuote } from "@/lib/menu-store";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useCart, type CartLine } from "@/lib/menu-store";
+import { submitQuote } from "@/server/quotes";
 import { baseMenu } from "@/data/menu";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,6 +12,18 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Trash2, Minus, Plus, Mail, Printer } from "lucide-react";
 import { toast } from "sonner";
+
+const FormSchema = z.object({
+  name: z.string().trim().min(1, "Name is required").max(200),
+  email: z.string().trim().email("Enter a valid email").max(320),
+  phone: z.string().trim().max(50).default(""),
+  eventDate: z.string().trim().max(50).default(""),
+  guestCount: z.string().trim().max(50).default(""),
+  notes: z.string().trim().max(5000).default(""),
+  website: z.string().max(0).default(""), // honeypot
+});
+type FormInput = z.input<typeof FormSchema>;
+type FormValues = z.output<typeof FormSchema>;
 
 export const Route = createFileRoute("/quote")({
   head: () => ({
@@ -28,40 +44,58 @@ export const Route = createFileRoute("/quote")({
   component: QuotePage,
 });
 
+function buildMailtoBody(
+  values: FormValues,
+  cart: CartLine[],
+  subtotal: number,
+  hasUnpriced: boolean,
+  businessName: string,
+): string {
+  const lines = cart.map((l) => `• ${l.quantity} × ${l.name} — ${l.tierLabel}`).join("\n");
+  const body = `Hello ${businessName},\n\nI'd like to request a catering quote:\n\n${lines}\n\nEstimated subtotal: $${subtotal.toFixed(2)}${hasUnpriced ? " (plus items priced on request)" : ""}\n\nName: ${values.name}\nPhone: ${values.phone}\nEvent date: ${values.eventDate}\nGuest count: ${values.guestCount}\nNotes: ${values.notes}\n\nThank you!`;
+  return encodeURIComponent(body);
+}
+
 function QuotePage() {
   const { cart, setQty, remove, subtotal, hasUnpriced, clear } = useCart();
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    eventDate: "",
-    guestCount: "",
-    notes: "",
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<FormInput, unknown, FormValues>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      eventDate: "",
+      guestCount: "",
+      notes: "",
+      website: "",
+    },
   });
-  const [submitted, setSubmitted] = useState<null | { ref: string }>(null);
+  const [submitted, setSubmitted] = useState<null | { ref: string; mailtoBody: string }>(null);
   const b = baseMenu.business;
 
-  const update = (k: keyof typeof form, v: string) => setForm((f) => ({ ...f, [k]: v }));
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = handleSubmit(async (values) => {
     if (cart.length === 0) {
       toast.error("Add at least one item to your quote first.");
       return;
     }
-    if (!form.name || !form.email) {
-      toast.error("Name and email are required.");
-      return;
+    const bodyBefore = buildMailtoBody(values, cart, subtotal, hasUnpriced, b.name);
+    try {
+      const { reference } = await submitQuote({
+        data: {
+          ...values,
+          lines: cart.map((l) => ({ itemId: l.itemId, tierId: l.tierId, quantity: l.quantity })),
+        },
+      });
+      setSubmitted({ ref: reference, mailtoBody: bodyBefore });
+      clear();
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Something went wrong — please try again.");
     }
-    const q = saveQuote({ ...form, lines: cart, subtotal });
-    setSubmitted({ ref: q.id.slice(0, 8).toUpperCase() });
-  };
-
-  const mailtoBody = () => {
-    const lines = cart.map((l) => `• ${l.quantity} × ${l.name} — ${l.tierLabel}`).join("\n");
-    const body = `Hello ${b.name},\n\nI'd like to request a catering quote:\n\n${lines}\n\nEstimated subtotal: $${subtotal.toFixed(2)}${hasUnpriced ? " (plus items priced on request)" : ""}\n\nName: ${form.name}\nPhone: ${form.phone}\nEvent date: ${form.eventDate}\nGuest count: ${form.guestCount}\nNotes: ${form.notes}\n\nThank you!`;
-    return encodeURIComponent(body);
-  };
+  });
 
   if (submitted) {
     return (
@@ -77,7 +111,7 @@ function QuotePage() {
         <div className="mt-6 flex flex-wrap justify-center gap-3">
           <Button asChild variant="outline" className="rounded-full">
             <a
-              href={`mailto:${b.bakery_email}?subject=Catering%20Quote%20Request&body=${mailtoBody()}`}
+              href={`mailto:${b.bakery_email}?subject=Catering%20Quote%20Request&body=${submitted.mailtoBody}`}
             >
               <Mail className="mr-1 h-4 w-4" /> Email a copy
             </a>
@@ -183,64 +217,53 @@ function QuotePage() {
 
         {/* Form */}
         <form
-          onSubmit={handleSubmit}
+          onSubmit={onSubmit}
           className="h-fit space-y-4 rounded-3xl border border-border/70 bg-card p-6 shadow-sm"
         >
           <h2 className="font-display text-2xl">Your details</h2>
+          <input
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            className="absolute -left-[9999px] h-0 w-0 opacity-0"
+            {...register("website")}
+          />
           <div className="grid gap-4">
             <Field label="Full name" required>
-              <Input
-                value={form.name}
-                onChange={(e) => update("name", e.target.value)}
-                required
-                maxLength={100}
-              />
+              <Input {...register("name")} maxLength={200} />
+              {errors.name && (
+                <p className="mt-1 text-xs text-destructive">{errors.name.message}</p>
+              )}
             </Field>
             <Field label="Email" required>
-              <Input
-                type="email"
-                value={form.email}
-                onChange={(e) => update("email", e.target.value)}
-                required
-                maxLength={255}
-              />
+              <Input type="email" {...register("email")} maxLength={320} />
+              {errors.email && (
+                <p className="mt-1 text-xs text-destructive">{errors.email.message}</p>
+              )}
             </Field>
             <Field label="Phone">
-              <Input
-                value={form.phone}
-                onChange={(e) => update("phone", e.target.value)}
-                maxLength={40}
-              />
+              <Input {...register("phone")} maxLength={50} />
             </Field>
             <div className="grid grid-cols-2 gap-3">
               <Field label="Event date">
-                <Input
-                  type="date"
-                  value={form.eventDate}
-                  onChange={(e) => update("eventDate", e.target.value)}
-                />
+                <Input type="date" {...register("eventDate")} />
               </Field>
               <Field label="Guests">
-                <Input
-                  type="number"
-                  min={1}
-                  value={form.guestCount}
-                  onChange={(e) => update("guestCount", e.target.value)}
-                />
+                <Input type="number" min={1} {...register("guestCount")} />
               </Field>
             </div>
             <Field label="Notes">
               <Textarea
                 rows={4}
-                value={form.notes}
-                onChange={(e) => update("notes", e.target.value)}
-                maxLength={1000}
+                {...register("notes")}
+                maxLength={5000}
                 placeholder="Dietary needs, delivery, timing…"
               />
             </Field>
           </div>
-          <Button type="submit" size="lg" className="w-full rounded-full">
-            Submit quote request
+          <Button type="submit" size="lg" className="w-full rounded-full" disabled={isSubmitting}>
+            {isSubmitting ? "Submitting…" : "Submit quote request"}
           </Button>
           <p className="text-center text-xs text-muted-foreground">
             We'll email a confirmation and follow-up within one business day.
