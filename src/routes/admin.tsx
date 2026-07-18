@@ -16,7 +16,13 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   Select,
   SelectContent,
@@ -29,10 +35,7 @@ import { toast } from "sonner";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
-    meta: [
-      { title: "Admin — The Boys Catering" },
-      { name: "robots", content: "noindex" },
-    ],
+    meta: [{ title: "Admin — The Boys Catering" }, { name: "robots", content: "noindex" }],
   }),
   component: AdminPage,
 });
@@ -160,7 +163,9 @@ function AdminDashboard({ onLock }: { onLock: () => void }) {
 function Stats({ flat, quotes }: { flat: FlatItem[]; quotes: number }) {
   const priced = flat.filter((f) => isPriced(f.item)).length;
   const unpriced = flat.length - priced;
-  const amounts = flat.flatMap((f) => f.item.prices.map((p) => p.amount ?? NaN)).filter((n) => !isNaN(n));
+  const amounts = flat
+    .flatMap((f) => f.item.prices.map((p) => p.amount ?? NaN))
+    .filter((n) => !isNaN(n));
   const cheapest = amounts.length ? Math.min(...amounts) : 0;
   const priciest = amounts.length ? Math.max(...amounts) : 0;
   const byCat = flat.reduce<Record<string, number>>((acc, f) => {
@@ -171,11 +176,17 @@ function Stats({ flat, quotes }: { flat: FlatItem[]; quotes: number }) {
   return (
     <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
       <StatCard label="Total items" value={flat.length.toString()} />
-      <StatCard label="Priced / on request" value={`${priced} / ${unpriced}`} tone={unpriced ? "warn" : undefined} />
+      <StatCard
+        label="Priced / on request"
+        value={`${priced} / ${unpriced}`}
+        tone={unpriced ? "warn" : undefined}
+      />
       <StatCard label="Cheapest" value={`$${cheapest.toFixed(2)}`} />
       <StatCard label="Priciest" value={`$${priciest.toFixed(2)}`} />
       <div className="rounded-2xl border border-border/70 bg-card p-4 shadow-sm md:col-span-2 lg:col-span-4">
-        <div className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Items per category</div>
+        <div className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+          Items per category
+        </div>
         <div className="mt-3 flex flex-wrap gap-2">
           {Object.entries(byCat).map(([c, n]) => (
             <Badge key={c} variant="secondary" className="rounded-full">
@@ -194,8 +205,14 @@ function Stats({ flat, quotes }: { flat: FlatItem[]; quotes: number }) {
 function StatCard({ label, value, tone }: { label: string; value: string; tone?: "warn" }) {
   return (
     <div className="rounded-2xl border border-border/70 bg-card p-4 shadow-sm">
-      <div className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">{label}</div>
-      <div className={"mt-1 font-display text-3xl " + (tone === "warn" ? "text-accent" : "text-primary")}>
+      <div className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+        {label}
+      </div>
+      <div
+        className={
+          "mt-1 font-display text-3xl " + (tone === "warn" ? "text-accent" : "text-primary")
+        }
+      >
         {value}
       </div>
     </div>
@@ -291,7 +308,9 @@ function ItemsTable({ flat }: { flat: FlatItem[] }) {
                   <td className="px-3 py-2 align-top">{row.category}</td>
                   <td className="px-3 py-2 align-top">{row.section}</td>
                   <td className="px-3 py-2 align-top font-medium">{row.item.name}</td>
-                  <td className="px-3 py-2 align-top text-muted-foreground">{row.item.description}</td>
+                  <td className="px-3 py-2 align-top text-muted-foreground">
+                    {row.item.description}
+                  </td>
                   <td className="px-3 py-2 align-top text-xs text-muted-foreground">
                     {row.item.size}
                     {row.item.serves && <div>{row.item.serves}</div>}
@@ -303,7 +322,9 @@ function ItemsTable({ flat }: { flat: FlatItem[] }) {
                       <ul className="space-y-0.5">
                         {row.item.prices.map((p, i) => (
                           <li key={i} className="text-xs">
-                            {p.label ? <span className="text-muted-foreground">{p.label}: </span> : null}
+                            {p.label ? (
+                              <span className="text-muted-foreground">{p.label}: </span>
+                            ) : null}
                             {formatPrice(p)}
                           </li>
                         ))}
@@ -361,9 +382,7 @@ function EditDialog({ row, onClose }: { row: FlatItem; onClose: () => void }) {
   const [description, setDescription] = useState(row.item.description ?? "");
   const [size, setSize] = useState(row.item.size ?? "");
   const [serves, setServes] = useState(row.item.serves ?? "");
-  const [prices, setPrices] = useState<Price[]>(
-    row.item.prices.length ? row.item.prices : [],
-  );
+  const [prices, setPrices] = useState<Price[]>(row.item.prices.length ? row.item.prices : []);
 
   const setPrice = (i: number, patch: Partial<Price>) =>
     setPrices((ps) => ps.map((p, idx) => (idx === i ? { ...p, ...patch } : p)));
@@ -389,7 +408,10 @@ function EditDialog({ row, onClose }: { row: FlatItem; onClose: () => void }) {
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle>
-            Edit — <span className="text-muted-foreground">{row.category} / {row.section}</span>
+            Edit —{" "}
+            <span className="text-muted-foreground">
+              {row.category} / {row.section}
+            </span>
           </DialogTitle>
         </DialogHeader>
         <div className="grid gap-4">
@@ -399,7 +421,11 @@ function EditDialog({ row, onClose }: { row: FlatItem; onClose: () => void }) {
           </div>
           <div>
             <Label>Description</Label>
-            <Textarea rows={2} value={description} onChange={(e) => setDescription(e.target.value)} />
+            <Textarea
+              rows={2}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
@@ -427,7 +453,9 @@ function EditDialog({ row, onClose }: { row: FlatItem; onClose: () => void }) {
             </div>
             <div className="space-y-2">
               {prices.length === 0 && (
-                <p className="text-sm italic text-muted-foreground">No price tiers — item will show "Price on request".</p>
+                <p className="text-sm italic text-muted-foreground">
+                  No price tiers — item will show "Price on request".
+                </p>
               )}
               {prices.map((p, i) => (
                 <div key={i} className="grid grid-cols-[1fr_100px_140px_36px] gap-2">
@@ -445,7 +473,10 @@ function EditDialog({ row, onClose }: { row: FlatItem; onClose: () => void }) {
                       setPrice(i, { amount: e.target.value === "" ? null : Number(e.target.value) })
                     }
                   />
-                  <Select value={p.unit} onValueChange={(v) => setPrice(i, { unit: v as PriceUnit })}>
+                  <Select
+                    value={p.unit}
+                    onValueChange={(v) => setPrice(i, { unit: v as PriceUnit })}
+                  >
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
@@ -509,7 +540,9 @@ function QuotesList() {
               <div className="text-xs text-muted-foreground">
                 Event: {q.eventDate || "—"} · Guests: {q.guestCount || "—"}
               </div>
-              {q.notes && <p className="mt-2 max-w-xl text-sm italic text-muted-foreground">"{q.notes}"</p>}
+              {q.notes && (
+                <p className="mt-2 max-w-xl text-sm italic text-muted-foreground">"{q.notes}"</p>
+              )}
             </div>
             <div className="text-right">
               <div className="font-display text-2xl text-primary">${q.subtotal.toFixed(2)}</div>
@@ -537,7 +570,7 @@ function QuotesList() {
                     {l.quantity} × {l.name}
                     <span className="text-xs text-muted-foreground"> — {l.category}</span>
                   </span>
-                  <span className="font-medium">{l.priceLabel}</span>
+                  <span className="font-medium">{l.tierLabel}</span>
                 </li>
               ))}
             </ul>

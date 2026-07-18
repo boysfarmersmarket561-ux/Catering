@@ -1,8 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMenu } from "@/lib/menu-store";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { catalogQueryOptions } from "@/lib/queries";
 import { MenuBrowser } from "@/components/menu-browser";
 
 export const Route = createFileRoute("/menu")({
+  loader: ({ context }) => context.queryClient.ensureQueryData(catalogQueryOptions()),
   head: () => ({
     meta: [
       { title: "Catering Menu — The Boys Farmers Market" },
@@ -14,7 +16,8 @@ export const Route = createFileRoute("/menu")({
       { property: "og:title", content: "Catering Menu — The Boys Farmers Market" },
       {
         property: "og:description",
-        content: "230+ gourmet catering items across 8 categories. Browse, filter, and build a quote.",
+        content:
+          "230+ gourmet catering items across 8 categories. Browse, filter, and build a quote.",
       },
     ],
   }),
@@ -22,18 +25,18 @@ export const Route = createFileRoute("/menu")({
 });
 
 function MenuPage() {
-  const menu = useMenu();
+  const { data } = useSuspenseQuery(catalogQueryOptions());
   return (
     <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
       <header className="mb-12">
         <span className="text-sm font-semibold uppercase tracking-[0.25em] text-accent">Menu</span>
         <h1 className="mt-3 font-display text-6xl md:text-7xl">The Full Catering Menu</h1>
         <p className="mt-4 max-w-3xl text-lg text-muted-foreground">
-          Browse every platter, entrée, and dessert we cater. Add items to build a quote — we'll follow up with
-          confirmation, dietary options, and delivery details.
+          Browse every platter, entrée, and dessert we cater. Add items to build a quote — we'll
+          follow up with confirmation, dietary options, and delivery details.
         </p>
       </header>
-      <MenuBrowser data={menu} />
+      <MenuBrowser categories={data} />
     </div>
   );
 }

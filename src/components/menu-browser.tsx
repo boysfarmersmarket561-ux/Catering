@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import type { MenuData, MenuItem } from "@/data/menu";
-import { formatPrice, isPriced, itemId } from "@/data/menu";
+import type { CatalogCategory, CatalogItem, CatalogTier } from "@/lib/catalog-types";
+import { formatTier, isPricedItem } from "@/lib/catalog-types";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -9,14 +9,17 @@ import { useCart } from "@/lib/menu-store";
 import { toast } from "sonner";
 
 function slugify(s: string) {
-  return s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+  return s
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
 }
 
 interface Props {
-  data: MenuData;
+  categories: CatalogCategory[];
 }
 
-export function MenuBrowser({ data }: Props) {
+export function MenuBrowser({ categories }: Props) {
   const [query, setQuery] = useState("");
   const [active, setActive] = useState<string>("all");
   const { addLine, cart } = useCart();
@@ -31,7 +34,7 @@ export function MenuBrowser({ data }: Props) {
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return data.categories
+    return categories
       .filter((c) => active === "all" || c.name === active)
       .map((c) => ({
         ...c,
@@ -50,14 +53,19 @@ export function MenuBrowser({ data }: Props) {
           .filter((s) => s.items.length > 0),
       }))
       .filter((c) => c.sections.length > 0);
-  }, [data, query, active]);
+  }, [categories, query, active]);
 
   const totalShown = filtered.reduce(
     (n, c) => n + c.sections.reduce((m, s) => m + s.items.length, 0),
     0,
   );
 
-  const inCart = (id: string) => cart.some((l) => l.id === id);
+  const totalItems = categories.reduce(
+    (n, c) => n + c.sections.reduce((m, s) => m + s.items.length, 0),
+    0,
+  );
+
+  const inCart = (id: string) => cart.some((l) => l.itemId === id);
 
   return (
     <div>
@@ -68,7 +76,7 @@ export function MenuBrowser({ data }: Props) {
             <Input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search all 230+ items…"
+              placeholder={`Search all ${totalItems} items…`}
               className="h-14 rounded-full border-primary/20 bg-card pl-12 text-base"
             />
           </div>
@@ -76,9 +84,9 @@ export function MenuBrowser({ data }: Props) {
         </div>
         <div className="mt-4 flex gap-2 overflow-x-auto pb-1">
           <CategoryChip label="All" active={active === "all"} onClick={() => setActive("all")} />
-          {data.categories.map((c) => (
+          {categories.map((c) => (
             <CategoryChip
-              key={c.name}
+              key={c.id}
               label={c.name}
               active={active === c.name}
               onClick={() => setActive(c.name)}
@@ -94,7 +102,7 @@ export function MenuBrowser({ data }: Props) {
       )}
 
       {filtered.map((cat) => (
-        <section key={cat.name} id={`cat-${slugify(cat.name)}`} className="mb-20 scroll-mt-56">
+        <section key={cat.id} id={`cat-${slugify(cat.name)}`} className="mb-20 scroll-mt-56">
           <div className="mb-6 flex items-baseline gap-4 border-b border-primary/20 pb-3">
             <h2 className="font-display text-4xl text-primary md:text-5xl">{cat.name}</h2>
             <span className="text-base text-muted-foreground">
@@ -102,36 +110,35 @@ export function MenuBrowser({ data }: Props) {
             </span>
           </div>
           {cat.sections.map((sec) => (
-            <div key={sec.name} className="mb-14">
+            <div key={sec.id} className="mb-14">
               <h3 className="font-display text-2xl text-foreground md:text-3xl">{sec.name}</h3>
-              {sec.note && <p className="mt-2 max-w-2xl text-base italic text-muted-foreground">{sec.note}</p>}
+              {sec.note && (
+                <p className="mt-2 max-w-2xl text-base italic text-muted-foreground">{sec.note}</p>
+              )}
               <div className="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-                {sec.items.map((it) => {
-                  const id = itemId(cat.name, sec.name, it.name);
-                  return (
-                    <ItemCard
-                      key={id}
-                      id={id}
-                      category={cat.name}
-                      section={sec.name}
-                      item={it}
-                      inCart={inCart(id)}
-                      onAdd={(priceIndex) => {
-                        const p = it.prices[priceIndex];
-                        addLine({
-                          id,
-                          category: cat.name,
-                          section: sec.name,
-                          name: it.name,
-                          priceIndex,
-                          priceLabel: p ? formatPrice(p) : "Price on request",
-                          unitAmount: p?.amount ?? null,
-                        });
-                        toast.success(`Added ${it.name} to your quote`);
-                      }}
-                    />
-                  );
-                })}
+                {sec.items.map((it) => (
+                  <ItemCard
+                    key={it.id}
+                    category={cat.name}
+                    section={sec.name}
+                    item={it}
+                    inCart={inCart(it.id)}
+                    onAdd={(tier) => {
+                      addLine({
+                        itemId: it.id,
+                        tierId: tier?.id ?? null,
+                        category: cat.name,
+                        section: sec.name,
+                        name: it.name,
+                        tierLabel: tier
+                          ? [tier.label, formatTier(tier)].filter(Boolean).join(" — ")
+                          : "Price on request",
+                        unitAmount: tier?.amount ?? null,
+                      });
+                      toast.success(`Added ${it.name} to your quote`);
+                    }}
+                  />
+                ))}
               </div>
             </div>
           ))}
@@ -141,7 +148,15 @@ export function MenuBrowser({ data }: Props) {
   );
 }
 
-function CategoryChip({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
+function CategoryChip({
+  label,
+  active,
+  onClick,
+}: {
+  label: string;
+  active: boolean;
+  onClick: () => void;
+}) {
   return (
     <button
       onClick={onClick}
@@ -158,21 +173,27 @@ function CategoryChip({ label, active, onClick }: { label: string; active: boole
 }
 
 function ItemCard({
-  id,
   item,
   inCart,
   onAdd,
 }: {
-  id: string;
   category: string;
   section: string;
-  item: MenuItem;
+  item: CatalogItem;
   inCart: boolean;
-  onAdd: (priceIndex: number) => void;
+  onAdd: (tier: CatalogTier | null) => void;
 }) {
-  const priced = isPriced(item);
+  const priced = isPricedItem(item);
   return (
     <article className="group flex flex-col rounded-2xl border border-border/70 bg-card p-7 shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md">
+      {item.imageUrl && (
+        <img
+          src={item.imageUrl}
+          alt={item.name}
+          loading="lazy"
+          className="mb-4 aspect-[4/3] w-full rounded-xl object-cover"
+        />
+      )}
       <div className="flex items-start justify-between gap-3">
         <h4 className="font-display text-2xl leading-snug text-foreground">{item.name}</h4>
         {!priced && (
@@ -197,24 +218,24 @@ function ItemCard({
         )}
       </div>
       <div className="mt-5 space-y-3">
-        {item.prices.length === 0 && (
+        {item.tiers.length === 0 && (
           <div className="flex items-center justify-between rounded-lg bg-secondary/60 px-4 py-3">
             <span className="text-base font-medium">Price on request</span>
-            <Button size="sm" variant="ghost" onClick={() => onAdd(0)}>
+            <Button size="sm" variant="ghost" onClick={() => onAdd(null)}>
               <Plus className="mr-1 h-4 w-4" /> Add
             </Button>
           </div>
         )}
-        {item.prices.map((p, i) => (
+        {item.tiers.map((t) => (
           <div
-            key={i}
+            key={t.id}
             className="flex items-center justify-between rounded-lg bg-secondary/50 px-4 py-3"
           >
             <div>
-              {p.label && <div className="text-sm text-muted-foreground">{p.label}</div>}
-              <div className="text-lg font-semibold text-foreground">{formatPrice(p)}</div>
+              {t.label && <div className="text-sm text-muted-foreground">{t.label}</div>}
+              <div className="text-lg font-semibold text-foreground">{formatTier(t)}</div>
             </div>
-            <Button size="sm" variant="ghost" onClick={() => onAdd(i)}>
+            <Button size="sm" variant="ghost" onClick={() => onAdd(t)}>
               <Plus className="mr-1 h-4 w-4" /> Add
             </Button>
           </div>

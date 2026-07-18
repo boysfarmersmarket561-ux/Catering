@@ -58,9 +58,7 @@ function QuotePage() {
   };
 
   const mailtoBody = () => {
-    const lines = cart
-      .map((l) => `• ${l.quantity} × ${l.name} — ${l.priceLabel}`)
-      .join("\n");
+    const lines = cart.map((l) => `• ${l.quantity} × ${l.name} — ${l.tierLabel}`).join("\n");
     const body = `Hello ${b.name},\n\nI'd like to request a catering quote:\n\n${lines}\n\nEstimated subtotal: $${subtotal.toFixed(2)}${hasUnpriced ? " (plus items priced on request)" : ""}\n\nName: ${form.name}\nPhone: ${form.phone}\nEvent date: ${form.eventDate}\nGuest count: ${form.guestCount}\nNotes: ${form.notes}\n\nThank you!`;
     return encodeURIComponent(body);
   };
@@ -73,12 +71,14 @@ function QuotePage() {
         </div>
         <h1 className="font-display text-4xl">Quote request received</h1>
         <p className="mt-3 text-muted-foreground">
-          Reference <span className="font-mono font-semibold">#{submitted.ref}</span>. We'll be in touch shortly.
-          You can also email or print your request below.
+          Reference <span className="font-mono font-semibold">#{submitted.ref}</span>. We'll be in
+          touch shortly. You can also email or print your request below.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-3">
           <Button asChild variant="outline" className="rounded-full">
-            <a href={`mailto:${b.bakery_email}?subject=Catering%20Quote%20Request&body=${mailtoBody()}`}>
+            <a
+              href={`mailto:${b.bakery_email}?subject=Catering%20Quote%20Request&body=${mailtoBody()}`}
+            >
               <Mail className="mr-1 h-4 w-4" /> Email a copy
             </a>
           </Button>
@@ -103,11 +103,13 @@ function QuotePage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
       <header className="mb-12">
-        <span className="text-sm font-semibold uppercase tracking-[0.25em] text-accent">Your quote</span>
+        <span className="text-sm font-semibold uppercase tracking-[0.25em] text-accent">
+          Your quote
+        </span>
         <h1 className="mt-3 font-display text-6xl md:text-7xl">Build a Quote</h1>
         <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
-          Review your selected items and share your event details. We'll follow up to confirm availability and
-          finalize pricing.
+          Review your selected items and share your event details. We'll follow up to confirm
+          availability and finalize pricing.
         </p>
       </header>
 
@@ -125,18 +127,18 @@ function QuotePage() {
           ) : (
             <ul className="mt-4 divide-y divide-border/60">
               {cart.map((l) => (
-                <li key={`${l.id}-${l.priceIndex}`} className="flex items-center gap-4 py-4">
+                <li key={`${l.itemId}-${l.tierId}`} className="flex items-center gap-4 py-4">
                   <div className="flex-1">
                     <div className="font-medium">{l.name}</div>
                     <div className="text-xs text-muted-foreground">
                       {l.category} · {l.section}
                     </div>
-                    <div className="mt-0.5 text-sm">{l.priceLabel}</div>
+                    <div className="mt-0.5 text-sm">{l.tierLabel}</div>
                   </div>
                   <div className="flex items-center gap-1 rounded-full border border-border bg-background">
                     <button
                       className="grid h-8 w-8 place-items-center hover:text-primary"
-                      onClick={() => setQty(l.id, l.priceIndex, l.quantity - 1)}
+                      onClick={() => setQty(l.itemId, l.tierId, l.quantity - 1)}
                       aria-label="Decrease"
                     >
                       <Minus className="h-3.5 w-3.5" />
@@ -144,7 +146,7 @@ function QuotePage() {
                     <span className="w-6 text-center text-sm font-medium">{l.quantity}</span>
                     <button
                       className="grid h-8 w-8 place-items-center hover:text-primary"
-                      onClick={() => setQty(l.id, l.priceIndex, l.quantity + 1)}
+                      onClick={() => setQty(l.itemId, l.tierId, l.quantity + 1)}
                       aria-label="Increase"
                     >
                       <Plus className="h-3.5 w-3.5" />
@@ -158,7 +160,7 @@ function QuotePage() {
                     )}
                   </div>
                   <button
-                    onClick={() => remove(l.id, l.priceIndex)}
+                    onClick={() => remove(l.itemId, l.tierId)}
                     className="text-muted-foreground hover:text-destructive"
                     aria-label="Remove"
                   >
@@ -187,7 +189,12 @@ function QuotePage() {
           <h2 className="font-display text-2xl">Your details</h2>
           <div className="grid gap-4">
             <Field label="Full name" required>
-              <Input value={form.name} onChange={(e) => update("name", e.target.value)} required maxLength={100} />
+              <Input
+                value={form.name}
+                onChange={(e) => update("name", e.target.value)}
+                required
+                maxLength={100}
+              />
             </Field>
             <Field label="Email" required>
               <Input
@@ -199,11 +206,19 @@ function QuotePage() {
               />
             </Field>
             <Field label="Phone">
-              <Input value={form.phone} onChange={(e) => update("phone", e.target.value)} maxLength={40} />
+              <Input
+                value={form.phone}
+                onChange={(e) => update("phone", e.target.value)}
+                maxLength={40}
+              />
             </Field>
             <div className="grid grid-cols-2 gap-3">
               <Field label="Event date">
-                <Input type="date" value={form.eventDate} onChange={(e) => update("eventDate", e.target.value)} />
+                <Input
+                  type="date"
+                  value={form.eventDate}
+                  onChange={(e) => update("eventDate", e.target.value)}
+                />
               </Field>
               <Field label="Guests">
                 <Input
@@ -236,7 +251,15 @@ function QuotePage() {
   );
 }
 
-function Field({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) {
+function Field({
+  label,
+  required,
+  children,
+}: {
+  label: string;
+  required?: boolean;
+  children: React.ReactNode;
+}) {
   return (
     <div>
       <Label className="mb-1 text-xs uppercase tracking-wider text-muted-foreground">

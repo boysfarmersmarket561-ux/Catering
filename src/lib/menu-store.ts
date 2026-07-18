@@ -82,7 +82,12 @@ export function flattenMenu(data: MenuData): FlatItem[] {
   for (const c of data.categories) {
     for (const s of c.sections) {
       for (const it of s.items) {
-        out.push({ id: itemId(c.name, s.name, it.name), category: c.name, section: s.name, item: it });
+        out.push({
+          id: itemId(c.name, s.name, it.name),
+          category: c.name,
+          section: s.name,
+          item: it,
+        });
       }
     }
   }
@@ -91,15 +96,15 @@ export function flattenMenu(data: MenuData): FlatItem[] {
 
 /* -------- Cart -------- */
 
-const CART_KEY = "boys-quote-cart-v1";
+const CART_KEY = "boys-quote-cart-v2";
 
 export interface CartLine {
-  id: string;
+  itemId: string;
+  tierId: string | null; // null = price-on-request item with no tiers
+  name: string;
   category: string;
   section: string;
-  name: string;
-  priceLabel: string; // formatted price string chosen tier
-  priceIndex: number; // which price tier
+  tierLabel: string; // display string, e.g. "Small — $59.99" or "Price on request"
   unitAmount: number | null; // for subtotal (null = unpriced)
   quantity: number;
 }
@@ -133,7 +138,7 @@ export function useCart() {
 
   const addLine = useCallback((line: Omit<CartLine, "quantity"> & { quantity?: number }) => {
     const cur = readCart();
-    const idx = cur.findIndex((l) => l.id === line.id && l.priceIndex === line.priceIndex);
+    const idx = cur.findIndex((l) => l.itemId === line.itemId && l.tierId === line.tierId);
     if (idx >= 0) {
       cur[idx].quantity += line.quantity ?? 1;
     } else {
@@ -142,15 +147,15 @@ export function useCart() {
     writeCart(cur);
   }, []);
 
-  const setQty = useCallback((id: string, priceIndex: number, qty: number) => {
+  const setQty = useCallback((itemId: string, tierId: string | null, qty: number) => {
     const cur = readCart()
-      .map((l) => (l.id === id && l.priceIndex === priceIndex ? { ...l, quantity: qty } : l))
+      .map((l) => (l.itemId === itemId && l.tierId === tierId ? { ...l, quantity: qty } : l))
       .filter((l) => l.quantity > 0);
     writeCart(cur);
   }, []);
 
-  const remove = useCallback((id: string, priceIndex: number) => {
-    writeCart(readCart().filter((l) => !(l.id === id && l.priceIndex === priceIndex)));
+  const remove = useCallback((itemId: string, tierId: string | null) => {
+    writeCart(readCart().filter((l) => !(l.itemId === itemId && l.tierId === tierId)));
   }, []);
 
   const clear = useCallback(() => writeCart([]), []);
