@@ -6,6 +6,7 @@ import { LoginForm } from "@/components/admin/login-form";
 import { CatalogTree } from "@/components/admin/catalog-tree";
 import { QuoteInbox } from "@/components/admin/quote-inbox";
 import { StaffManager } from "@/components/admin/staff-manager";
+import { SettingsForm } from "@/components/admin/settings-form";
 import { adminQuotesQueryOptions } from "@/lib/queries";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
@@ -74,7 +75,9 @@ function AdminPage() {
           </Suspense>
         </TabsContent>
         <TabsContent value="settings">
-          <p className="py-10 text-muted-foreground">Settings arrive in a later task.</p>
+          <Suspense fallback={<p className="py-10 text-muted-foreground">Loading…</p>}>
+            <SettingsForm />
+          </Suspense>
         </TabsContent>
       </Tabs>
     </div>

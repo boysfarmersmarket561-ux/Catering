@@ -1,12 +1,26 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
+import { supabaseAdmin } from "@/lib/supabase.server";
 
-const BASE_URL = "";
+async function resolveOrigin(): Promise<string> {
+  try {
+    const { data } = await supabaseAdmin()
+      .from("settings")
+      .select("site_origin")
+      .eq("id", 1)
+      .single();
+    if (data?.site_origin) return data.site_origin.replace(/\/$/, "");
+  } catch {
+    /* fall through to env */
+  }
+  return (process.env.SITE_ORIGIN ?? "").replace(/\/$/, "");
+}
 
 export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
       GET: async () => {
+        const BASE_URL = await resolveOrigin();
         const entries = [
           { path: "/", priority: "1.0", changefreq: "weekly" as const },
           { path: "/menu", priority: "0.9", changefreq: "weekly" as const },

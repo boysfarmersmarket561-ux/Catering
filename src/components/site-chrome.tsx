@@ -1,5 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import { baseMenu } from "@/data/menu";
+import { settingsQueryOptions } from "@/lib/queries";
 import { Phone, Mail, MapPin, Facebook, Instagram, Clock } from "lucide-react";
 import { CartIndicator } from "./cart-indicator";
 import fruitHeader from "@/assets/boys-fruit-header.png";
@@ -14,6 +16,7 @@ const nav = [
 
 export function SiteHeader() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const { data: settings } = useQuery(settingsQueryOptions());
   const b = baseMenu.business;
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background">
@@ -22,15 +25,31 @@ export function SiteHeader() {
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2 text-xs text-primary sm:px-6 lg:px-8">
           <span className="inline-flex items-center gap-1.5">
             <Clock className="h-3.5 w-3.5" />
-            <span className="hidden sm:inline">Store Hours:</span> Monday – Sunday 8:30am – 6:00pm
+            <span className="hidden sm:inline">Store Hours:</span> {settings?.store_hours[0] ?? ""}
           </span>
           <span className="flex items-center gap-4">
-            <a href="https://www.facebook.com/" target="_blank" rel="noreferrer" aria-label="Facebook" className="hover:text-accent">
-              <Facebook className="h-4 w-4" />
-            </a>
-            <a href="https://www.instagram.com/" target="_blank" rel="noreferrer" aria-label="Instagram" className="hover:text-accent">
-              <Instagram className="h-4 w-4" />
-            </a>
+            {settings?.facebook_url && (
+              <a
+                href={settings.facebook_url}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Facebook"
+                className="hover:text-accent"
+              >
+                <Facebook className="h-4 w-4" />
+              </a>
+            )}
+            {settings?.instagram_url && (
+              <a
+                href={settings.instagram_url}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Instagram"
+                className="hover:text-accent"
+              >
+                <Instagram className="h-4 w-4" />
+              </a>
+            )}
           </span>
         </div>
       </div>
@@ -67,9 +86,7 @@ export function SiteHeader() {
                   to={n.to}
                   className={
                     "relative whitespace-nowrap px-4 py-3 text-sm font-semibold uppercase tracking-[0.2em] transition-colors sm:text-base " +
-                    (active
-                      ? "text-primary"
-                      : "text-primary/80 hover:text-primary")
+                    (active ? "text-primary" : "text-primary/80 hover:text-primary")
                   }
                 >
                   {n.label}
@@ -93,6 +110,7 @@ export function SiteHeader() {
 }
 
 export function SiteFooter() {
+  const { data: settings } = useQuery(settingsQueryOptions());
   const b = baseMenu.business;
   return (
     <footer className="mt-24 border-t-2 border-accent/60 bg-secondary">
@@ -122,8 +140,9 @@ export function SiteFooter() {
         </div>
         <div className="text-base">
           <h4 className="mb-3 font-display text-2xl">Hours</h4>
-          <p className="text-muted-foreground">Monday – Sunday</p>
-          <p>8:30 AM – 6:00 PM</p>
+          {settings?.store_hours.map((line, i) => (
+            <p key={i}>{line}</p>
+          ))}
           <p className="mt-4 text-sm text-muted-foreground">
             © {new Date().getFullYear()} {b.name}. All rights reserved.
           </p>
