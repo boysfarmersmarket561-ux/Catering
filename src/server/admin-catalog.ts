@@ -162,6 +162,47 @@ export const reorder = createServerFn({ method: "POST" })
     return { ok: true };
   });
 
+const ImageKind = z.enum(["category", "item"]);
+
+export const uploadImage = createServerFn({ method: "POST" })
+  .validator((data: unknown) => {
+    if (!(data instanceof FormData)) throw new Error("Expected FormData");
+    const kind = ImageKind.parse(data.get("kind"));
+    const id = z.string().uuid().parse(data.get("id"));
+    const file = data.get("file");
+    if (!(file instanceof File)) throw new Error("Missing file");
+    if (file.size > 5 * 1024 * 1024) throw new Error("Image too large (max 5 MB)");
+    return { kind, id, file };
+  })
+  .handler(async ({ data }) => {
+    await requireAdmin();
+    const sb = supabaseAdmin();
+    const path = `${data.kind}s/${data.id}.jpg`;
+    const bytes = new Uint8Array(await data.file.arrayBuffer());
+    const { error: upErr } = await sb.storage
+      .from("menu-images")
+      .upload(path, bytes, { contentType: "image/jpeg", upsert: true });
+    if (upErr) fail("uploadImage", upErr.message);
+    const table = data.kind === "item" ? "items" : "categories";
+    // cache-bust suffix so replaced images refresh in browsers
+    const stored = `${path}?v=${crypto.randomUUID().slice(0, 8)}`;
+    const { error } = await sb.from(table).update({ image_path: stored }).eq("id", data.id);
+    if (error) fail("uploadImage update", error.message);
+    return { imageUrl: `${imageBaseUrl()}/${stored}` };
+  });
+
+export const removeImage = createServerFn({ method: "POST" })
+  .validator(Id.extend({ kind: ImageKind }))
+  .handler(async ({ data }) => {
+    await requireAdmin();
+    const sb = supabaseAdmin();
+    await sb.storage.from("menu-images").remove([`${data.kind}s/${data.id}.jpg`]);
+    const table = data.kind === "item" ? "items" : "categories";
+    const { error } = await sb.from(table).update({ image_path: null }).eq("id", data.id);
+    if (error) fail("removeImage", error.message);
+    return { ok: true };
+  });
+
 export const replaceTiers = createServerFn({ method: "POST" })
   .validator(
     z.object({

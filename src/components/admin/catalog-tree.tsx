@@ -28,6 +28,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { SortableList, SortableRow } from "./sortable-list";
 import { ItemEditor } from "./item-editor";
+import { ImageUpload } from "./image-upload";
 
 /**
  * Wraps a server-fn mutation: on success, invalidates both the admin catalogue
@@ -228,6 +229,7 @@ export function CatalogTree() {
               </SortableRow>
               <AccordionContent>
                 <div className="space-y-3 pl-8">
+                  <ImageUpload kind="category" id={cat.id} imageUrl={cat.imageUrl} />
                   <AddInlineForm
                     placeholder="New section name"
                     onAdd={(name) => doCreateSection.mutate({ categoryId: cat.id, name })}

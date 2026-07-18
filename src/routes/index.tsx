@@ -81,12 +81,22 @@ function Index() {
                 key={c.id}
                 to="/menu"
                 hash={`cat-${slugify(c.name)}`}
-                className="group rounded-xl border border-border bg-card p-7 shadow-sm transition hover:border-accent hover:shadow-md"
+                className="group overflow-hidden rounded-xl border border-border bg-card shadow-sm transition hover:border-accent hover:shadow-md"
               >
-                <Utensils className="mb-4 h-6 w-6 text-accent" />
-                <div className="font-display text-2xl text-primary">{c.name}</div>
-                <div className="mt-2 text-sm uppercase tracking-wider text-muted-foreground">
-                  {c.sections.length} sections · {count} items
+                {c.imageUrl && (
+                  <img
+                    src={c.imageUrl}
+                    alt=""
+                    loading="lazy"
+                    className="h-36 w-full object-cover"
+                  />
+                )}
+                <div className="p-7">
+                  <Utensils className="mb-4 h-6 w-6 text-accent" />
+                  <div className="font-display text-2xl text-primary">{c.name}</div>
+                  <div className="mt-2 text-sm uppercase tracking-wider text-muted-foreground">
+                    {c.sections.length} sections · {count} items
+                  </div>
                 </div>
               </Link>
             );
