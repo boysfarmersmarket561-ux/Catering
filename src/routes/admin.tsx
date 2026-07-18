@@ -1,6 +1,8 @@
+import { Suspense } from "react";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { getAdminSession, adminSignOut } from "@/server/admin-auth";
 import { LoginForm } from "@/components/admin/login-form";
+import { CatalogTree } from "@/components/admin/catalog-tree";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 
@@ -43,9 +45,9 @@ function AdminPage() {
           <TabsTrigger value="settings">Settings</TabsTrigger>
         </TabsList>
         <TabsContent value="catalogue">
-          <p className="py-10 text-muted-foreground">
-            Catalogue management arrives in the next task.
-          </p>
+          <Suspense fallback={<p className="py-10 text-muted-foreground">Loading…</p>}>
+            <CatalogTree />
+          </Suspense>
         </TabsContent>
         <TabsContent value="quotes">
           <p className="py-10 text-muted-foreground">Quote inbox arrives in a later task.</p>
