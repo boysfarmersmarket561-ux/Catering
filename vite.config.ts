@@ -26,11 +26,15 @@ export default defineConfig({
     tanstackStart({
       // Use src/server.ts as the SSR server entry (our error-handling wrapper).
       server: { entry: "server" },
-      // Stop client bundles from importing server-only code.
+      // Stop client bundles from importing server-only code (secret-key
+      // Supabase client, admin session cookies, rate limiter). Files under
+      // src/server/** are createServerFn wrapper modules meant to be
+      // imported by routes/components — only the *.server.ts naming
+      // convention (src/lib/*.server.ts) holds the actual server-only logic.
       importProtection: {
         behavior: "error",
         client: {
-          files: ["**/server/**"],
+          files: ["**/*.server.ts"],
           specifiers: ["server-only"],
         },
       },
