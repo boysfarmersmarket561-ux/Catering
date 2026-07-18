@@ -2580,6 +2580,7 @@ import { supabaseAdmin } from "@/lib/supabase.server";
 export interface StaffUser {
   id: string;
   email: string;
+  name: string;           // display name, from user_metadata.full_name
   createdAt: string;
   lastSignInAt: string | null;
   disabled: boolean;
@@ -2598,6 +2599,9 @@ export const listStaff = createServerFn({ method: "GET" }).handler(
     return data.users.map((u) => ({
       id: u.id,
       email: u.email ?? "",
+      // user_metadata is user-editable, so it is display-only — never used for
+      // any authorization decision.
+      name: (u.user_metadata?.full_name as string | undefined) ?? "",
       createdAt: u.created_at,
       lastSignInAt: u.last_sign_in_at ?? null,
       disabled: isDisabled(u as { banned_until?: string | null }),
@@ -2607,7 +2611,8 @@ export const listStaff = createServerFn({ method: "GET" }).handler(
 
 export const createStaff = createServerFn({ method: "POST" })
   .inputValidator(z.object({
-    email: z.string().trim().email().max(320),
+    email: z.string().trim().email().max(320).transform((s) => s.toLowerCase()),
+    name: z.string().trim().min(1).max(120),
     password: z.string().min(12).max(200),
   }))
   .handler(async ({ data }) => {
@@ -2616,8 +2621,20 @@ export const createStaff = createServerFn({ method: "POST" })
       email: data.email,
       password: data.password,
       email_confirm: true, // staff accounts are trusted; skip the confirmation round-trip
+      user_metadata: { full_name: data.name },
     });
     if (error) throw new Error(`createStaff: ${error.message}`);
+    return { ok: true };
+  });
+
+export const renameStaff = createServerFn({ method: "POST" })
+  .inputValidator(z.object({ id: z.string().uuid(), name: z.string().trim().min(1).max(120) }))
+  .handler(async ({ data }) => {
+    await requireAdmin();
+    const { error } = await supabaseAdmin().auth.admin.updateUserById(data.id, {
+      user_metadata: { full_name: data.name },
+    });
+    if (error) throw new Error(`renameStaff: ${error.message}`);
     return { ok: true };
   });
 
@@ -2691,11 +2708,16 @@ export function StaffManager({ currentUserId }: { currentUserId: string }) {
   const qc = useQueryClient();
   const invalidate = () => qc.invalidateQueries({ queryKey: ["admin-staff"] });
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
 
   const add = useMutation({
-    mutationFn: () => createStaff({ data: { email: email.trim(), password } }),
-    onSuccess: () => { setEmail(""); setPassword(""); invalidate(); toast.success("Staff account created"); },
+    mutationFn: () => createStaff({ data: { email: email.trim(), name: name.trim(), password } }),
+    onSuccess: () => {
+      setEmail(""); setName(""); setPassword("");
+      invalidate();
+      toast.success("Staff account created");
+    },
     onError: (e: Error) => toast.error(e.message),
   });
   const toggle = useMutation({
@@ -2725,6 +2747,11 @@ export function StaffManager({ currentUserId }: { currentUserId: string }) {
         <h3 className="font-medium">Add a staff account</h3>
         <div className="grid gap-3 sm:grid-cols-2">
           <div>
+            <Label htmlFor="staff-name">Name</Label>
+            <Input id="staff-name" value={name} required maxLength={120}
+              onChange={(e) => setName(e.target.value)} autoComplete="off" placeholder="Harrison" />
+          </div>
+          <div>
             <Label htmlFor="staff-email">Email</Label>
             <Input id="staff-email" type="email" value={email} required
               onChange={(e) => setEmail(e.target.value)} autoComplete="off" />
@@ -2747,7 +2774,8 @@ export function StaffManager({ currentUserId }: { currentUserId: string }) {
           const isSelf = u.id === currentUserId;
           return (
             <li key={u.id} className="flex flex-wrap items-center gap-3 px-4 py-3">
-              <span className="text-sm font-medium">{u.email}</span>
+              <span className="text-sm font-medium">{u.name || u.email}</span>
+              {u.name && <span className="text-xs text-muted-foreground">{u.email}</span>}
               {isSelf && <Badge variant="outline">You</Badge>}
               {u.disabled && <Badge variant="destructive">Disabled</Badge>}
               <span className="text-xs text-muted-foreground">
