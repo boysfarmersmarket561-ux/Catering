@@ -2559,6 +2559,238 @@ const newCount = quotesForBadge?.filter((q) => q.status === "new").length ?? 0;
 
 - [ ] **Step 6: Commit** — `git add src/server/admin-quotes.ts src/components/admin/quote-inbox.tsx src/lib/queries.ts src/routes/admin.tsx && git commit -m "feat: db-backed admin quote inbox with statuses"`
 
+### Task 18b: Staff account management (admin users)
+
+**Files:**
+- Create: `src/server/admin-users.ts`, `src/components/admin/staff-manager.tsx`
+- Modify: `src/lib/queries.ts`, `src/routes/admin.tsx` (add a "Staff" tab)
+
+Added after the original plan: the owner wants staff accounts created and revoked **in the portal**, not by hand in the Supabase dashboard. Supabase Auth remains the store of record; these server fns wrap its admin API using the secret key. Public signup stays disabled, so this screen is the only way an account comes into existence.
+
+**Safety rules baked in:** an admin may not delete or disable their own account (prevents self-lockout), and the last remaining active admin cannot be removed (prevents total lockout). Both are enforced server-side, not just in the UI.
+
+- [ ] **Step 1: Implement `src/server/admin-users.ts`**
+
+```ts
+import { createServerFn } from "@tanstack/react-start";
+import { z } from "zod";
+import { requireAdmin } from "@/lib/admin-auth.server";
+import { supabaseAdmin } from "@/lib/supabase.server";
+
+export interface StaffUser {
+  id: string;
+  email: string;
+  createdAt: string;
+  lastSignInAt: string | null;
+  disabled: boolean;
+}
+
+/** Supabase marks a user banned via banned_until; treat any future date as disabled. */
+function isDisabled(u: { banned_until?: string | null }): boolean {
+  return !!u.banned_until && new Date(u.banned_until).getTime() > Date.now();
+}
+
+export const listStaff = createServerFn({ method: "GET" }).handler(
+  async (): Promise<StaffUser[]> => {
+    await requireAdmin();
+    const { data, error } = await supabaseAdmin().auth.admin.listUsers({ page: 1, perPage: 200 });
+    if (error) throw new Error(`listStaff: ${error.message}`);
+    return data.users.map((u) => ({
+      id: u.id,
+      email: u.email ?? "",
+      createdAt: u.created_at,
+      lastSignInAt: u.last_sign_in_at ?? null,
+      disabled: isDisabled(u as { banned_until?: string | null }),
+    }));
+  },
+);
+
+export const createStaff = createServerFn({ method: "POST" })
+  .inputValidator(z.object({
+    email: z.string().trim().email().max(320),
+    password: z.string().min(12).max(200),
+  }))
+  .handler(async ({ data }) => {
+    await requireAdmin();
+    const { error } = await supabaseAdmin().auth.admin.createUser({
+      email: data.email,
+      password: data.password,
+      email_confirm: true, // staff accounts are trusted; skip the confirmation round-trip
+    });
+    if (error) throw new Error(`createStaff: ${error.message}`);
+    return { ok: true };
+  });
+
+async function activeAdminCount(): Promise<number> {
+  const { data, error } = await supabaseAdmin().auth.admin.listUsers({ page: 1, perPage: 200 });
+  if (error) throw new Error(`activeAdminCount: ${error.message}`);
+  return data.users.filter((u) => !isDisabled(u as { banned_until?: string | null })).length;
+}
+
+export const setStaffDisabled = createServerFn({ method: "POST" })
+  .inputValidator(z.object({ id: z.string().uuid(), disabled: z.boolean() }))
+  .handler(async ({ data }) => {
+    const session = await requireAdmin();
+    if (data.id === session.userId) throw new Error("You cannot disable your own account.");
+    if (data.disabled && (await activeAdminCount()) <= 1) {
+      throw new Error("Cannot disable the last active staff account.");
+    }
+    const { error } = await supabaseAdmin().auth.admin.updateUserById(data.id, {
+      ban_duration: data.disabled ? "876000h" : "none", // ~100 years = indefinite
+    });
+    if (error) throw new Error(`setStaffDisabled: ${error.message}`);
+    return { ok: true };
+  });
+
+export const deleteStaff = createServerFn({ method: "POST" })
+  .inputValidator(z.object({ id: z.string().uuid() }))
+  .handler(async ({ data }) => {
+    const session = await requireAdmin();
+    if (data.id === session.userId) throw new Error("You cannot delete your own account.");
+    if ((await activeAdminCount()) <= 1) throw new Error("Cannot delete the last active staff account.");
+    const { error } = await supabaseAdmin().auth.admin.deleteUser(data.id);
+    if (error) throw new Error(`deleteStaff: ${error.message}`);
+    return { ok: true };
+  });
+
+export const resetStaffPassword = createServerFn({ method: "POST" })
+  .inputValidator(z.object({ id: z.string().uuid(), password: z.string().min(12).max(200) }))
+  .handler(async ({ data }) => {
+    await requireAdmin();
+    const { error } = await supabaseAdmin().auth.admin.updateUserById(data.id, { password: data.password });
+    if (error) throw new Error(`resetStaffPassword: ${error.message}`);
+    return { ok: true };
+  });
+```
+
+- [ ] **Step 2: Append to `src/lib/queries.ts`**
+
+```ts
+import { listStaff } from "@/server/admin-users";
+
+export const staffQueryOptions = () =>
+  queryOptions({ queryKey: ["admin-staff"], queryFn: () => listStaff() });
+```
+
+- [ ] **Step 3: Create `src/components/admin/staff-manager.tsx`**
+
+```tsx
+import { useState } from "react";
+import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { staffQueryOptions } from "@/lib/queries";
+import { createStaff, deleteStaff, resetStaffPassword, setStaffDisabled } from "@/server/admin-users";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Trash2, KeyRound } from "lucide-react";
+import { toast } from "sonner";
+
+export function StaffManager({ currentUserId }: { currentUserId: string }) {
+  const { data: staff } = useSuspenseQuery(staffQueryOptions());
+  const qc = useQueryClient();
+  const invalidate = () => qc.invalidateQueries({ queryKey: ["admin-staff"] });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const add = useMutation({
+    mutationFn: () => createStaff({ data: { email: email.trim(), password } }),
+    onSuccess: () => { setEmail(""); setPassword(""); invalidate(); toast.success("Staff account created"); },
+    onError: (e: Error) => toast.error(e.message),
+  });
+  const toggle = useMutation({
+    mutationFn: (v: { id: string; disabled: boolean }) => setStaffDisabled({ data: v }),
+    onSuccess: invalidate, onError: (e: Error) => toast.error(e.message),
+  });
+  const remove = useMutation({
+    mutationFn: (id: string) => deleteStaff({ data: { id } }),
+    onSuccess: invalidate, onError: (e: Error) => toast.error(e.message),
+  });
+  const resetPw = useMutation({
+    mutationFn: (v: { id: string; password: string }) => resetStaffPassword({ data: v }),
+    onSuccess: () => toast.success("Password updated"),
+    onError: (e: Error) => toast.error(e.message),
+  });
+
+  return (
+    <div className="max-w-3xl space-y-8">
+      <form
+        className="space-y-3 rounded-xl border p-4"
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (password.length < 12) { toast.error("Password must be at least 12 characters."); return; }
+          add.mutate();
+        }}
+      >
+        <h3 className="font-medium">Add a staff account</h3>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <div>
+            <Label htmlFor="staff-email">Email</Label>
+            <Input id="staff-email" type="email" value={email} required
+              onChange={(e) => setEmail(e.target.value)} autoComplete="off" />
+          </div>
+          <div>
+            <Label htmlFor="staff-password">Temporary password</Label>
+            <Input id="staff-password" type="text" value={password} required minLength={12}
+              onChange={(e) => setPassword(e.target.value)} autoComplete="off"
+              placeholder="min 12 characters" />
+          </div>
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Share the password with the staff member directly; they can change it later.
+        </p>
+        <Button type="submit" disabled={add.isPending}>Create account</Button>
+      </form>
+
+      <ul className="divide-y rounded-xl border">
+        {staff.map((u) => {
+          const isSelf = u.id === currentUserId;
+          return (
+            <li key={u.id} className="flex flex-wrap items-center gap-3 px-4 py-3">
+              <span className="text-sm font-medium">{u.email}</span>
+              {isSelf && <Badge variant="outline">You</Badge>}
+              {u.disabled && <Badge variant="destructive">Disabled</Badge>}
+              <span className="text-xs text-muted-foreground">
+                {u.lastSignInAt ? `Last sign-in ${new Date(u.lastSignInAt).toLocaleDateString()}` : "Never signed in"}
+              </span>
+              <div className="ml-auto flex items-center gap-2">
+                <Button variant="outline" size="sm" disabled={isSelf || toggle.isPending}
+                  onClick={() => toggle.mutate({ id: u.id, disabled: !u.disabled })}>
+                  {u.disabled ? "Enable" : "Disable"}
+                </Button>
+                <Button variant="ghost" size="sm"
+                  onClick={() => {
+                    const pw = window.prompt(`New password for ${u.email} (min 12 characters):`);
+                    if (pw && pw.length >= 12) resetPw.mutate({ id: u.id, password: pw });
+                    else if (pw) toast.error("Password must be at least 12 characters.");
+                  }}>
+                  <KeyRound className="h-4 w-4" />
+                </Button>
+                <Button variant="ghost" size="sm" disabled={isSelf}
+                  onClick={() => { if (window.confirm(`Delete staff account ${u.email}?`)) remove.mutate(u.id); }}>
+                  <Trash2 className="h-4 w-4 text-destructive" />
+                </Button>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+```
+
+- [ ] **Step 4: Mount** in `src/routes/admin.tsx`: add `<TabsTrigger value="staff">Staff</TabsTrigger>` and a Suspense-wrapped `<TabsContent value="staff"><StaffManager currentUserId={session.userId} /></TabsContent>`.
+
+- [ ] **Step 5: Manual verify** — create a second staff account, sign out, sign in as it (confirms it works), sign back in as the original. Disable the second account and confirm sign-in is refused; re-enable. Confirm the "You" row's disable/delete buttons are inert, and that the server rejects a crafted self-delete (temporarily point the button at your own id, or trust the server check and note it). Delete the second account.
+
+- [ ] **Step 6: Commit**
+
+```bash
+git add src/server/admin-users.ts src/components/admin/staff-manager.tsx src/lib/queries.ts src/routes/admin.tsx
+git commit -m "feat: staff account management in admin portal"
+```
+
 # Phase 4 — Enterprise email via Microsoft Graph
 
 ### Task 19: Graph sender + Azure runbook
