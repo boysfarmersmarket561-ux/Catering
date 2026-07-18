@@ -2,7 +2,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { baseMenu } from "@/data/menu";
 import { settingsQueryOptions } from "@/lib/queries";
-import { Phone, Mail, MapPin, Facebook, Instagram, Clock } from "lucide-react";
+import { Phone, Mail, MapPin, Facebook, Instagram, Clock, Lock } from "lucide-react";
 import { CartIndicator } from "./cart-indicator";
 import fruitHeader from "@/assets/boys-fruit-header.png";
 import boysLogo from "@/assets/boys-logo.png";
@@ -146,6 +146,14 @@ export function SiteFooter() {
           <p className="mt-4 text-sm text-muted-foreground">
             © {new Date().getFullYear()} {b.name}. All rights reserved.
           </p>
+          <Link
+            to="/admin"
+            rel="nofollow"
+            className="mt-2 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition hover:text-primary"
+          >
+            <Lock className="h-3.5 w-3.5" />
+            Staff login
+          </Link>
         </div>
       </div>
     </footer>
