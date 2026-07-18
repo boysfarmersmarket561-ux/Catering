@@ -1,9 +1,14 @@
 import { Suspense } from "react";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import { getAdminSession, adminSignOut } from "@/server/admin-auth";
 import { LoginForm } from "@/components/admin/login-form";
 import { CatalogTree } from "@/components/admin/catalog-tree";
+import { QuoteInbox } from "@/components/admin/quote-inbox";
+import { StaffManager } from "@/components/admin/staff-manager";
+import { adminQuotesQueryOptions } from "@/lib/queries";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/admin")({
@@ -17,6 +22,12 @@ export const Route = createFileRoute("/admin")({
 function AdminPage() {
   const { session } = Route.useLoaderData();
   const router = useRouter();
+  const { data: quotesForBadge } = useQuery({
+    ...adminQuotesQueryOptions(),
+    enabled: !!session,
+  });
+  const newCount = quotesForBadge?.filter((q) => q.status === "new").length ?? 0;
+
   if (!session) return <LoginForm />;
 
   return (
@@ -40,7 +51,10 @@ function AdminPage() {
       <Tabs defaultValue="catalogue">
         <TabsList>
           <TabsTrigger value="catalogue">Catalogue</TabsTrigger>
-          <TabsTrigger value="quotes">Quotes</TabsTrigger>
+          <TabsTrigger value="quotes">
+            Quotes
+            {newCount > 0 && <Badge className="ml-1.5">{newCount}</Badge>}
+          </TabsTrigger>
           <TabsTrigger value="staff">Staff</TabsTrigger>
           <TabsTrigger value="settings">Settings</TabsTrigger>
         </TabsList>
@@ -50,10 +64,14 @@ function AdminPage() {
           </Suspense>
         </TabsContent>
         <TabsContent value="quotes">
-          <p className="py-10 text-muted-foreground">Quote inbox arrives in a later task.</p>
+          <Suspense fallback={<p className="py-10 text-muted-foreground">Loading…</p>}>
+            <QuoteInbox />
+          </Suspense>
         </TabsContent>
         <TabsContent value="staff">
-          <p className="py-10 text-muted-foreground">Staff management arrives in a later task.</p>
+          <Suspense fallback={<p className="py-10 text-muted-foreground">Loading…</p>}>
+            <StaffManager currentUserId={session.userId} />
+          </Suspense>
         </TabsContent>
         <TabsContent value="settings">
           <p className="py-10 text-muted-foreground">Settings arrive in a later task.</p>
