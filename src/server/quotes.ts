@@ -43,7 +43,7 @@ const ITEM_SELECT =
   "id,name,active,section:sections(name,active,category:categories(name,active)),price_tiers(id,label,amount,unit)";
 
 export const submitQuote = createServerFn({ method: "POST" })
-  .inputValidator(SubmitQuoteSchema)
+  .validator(SubmitQuoteSchema)
   .handler(async ({ data }): Promise<{ reference: string }> => {
     const ip = getRequestIP() ?? "unknown";
     if (!allowRequest(`quote:${ip}`)) {

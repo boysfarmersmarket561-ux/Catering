@@ -6,7 +6,7 @@
 
 **Architecture:** Supabase Postgres + Storage + Auth behind TanStack Start server functions — the browser never talks to Supabase directly; the secret key lives server-side only and RLS is deny-all defense in depth. Customer pages load via route loaders + React Query; the admin portal is a session-gated SPA tab set backed by admin server functions. Email goes through one `EmailSender` interface with Resend and Graph implementations selected by env var.
 
-**Tech Stack:** TanStack Start 1.168 (already installed; server functions use `.inputValidator()` + `.handler()`), React 19, React Query 5, Tailwind v4, shadcn/ui, zod 3.24, react-hook-form, `@supabase/supabase-js` v2, `@dnd-kit` (sortable), Vitest, Resend HTTP API, Microsoft Graph API.
+**Tech Stack:** TanStack Start 1.168 (already installed; server functions use `.validator()` + `.handler()`), React 19, React Query 5, Tailwind v4, shadcn/ui, zod 3.24, react-hook-form, `@supabase/supabase-js` v2, `@dnd-kit` (sortable), Vitest, Resend HTTP API, Microsoft Graph API.
 
 **Spec:** `docs/superpowers/specs/2026-07-18-productionize-catering-design.md`
 
@@ -87,7 +87,7 @@ GRAPH_SENDER_MAILBOX=
 
 - Server-only modules end in `.server.ts` or live in `src/server/` — never import them from client components except via server functions.
 - All admin server fns call `await requireAdmin()` first; it throws on failure.
-- All server fn inputs validated with zod via `.inputValidator(Schema)` (zod 3.24 implements Standard Schema — pass the schema directly).
+- All server fn inputs validated with zod via `.validator(Schema)` (zod 3.24 implements Standard Schema — pass the schema directly).
 - Run tests with `npx vitest run` (or a single file: `npx vitest run tests/foo.test.ts`).
 - Commit after every task. `npm run lint` before each commit.
 
@@ -1323,7 +1323,7 @@ const ITEM_SELECT =
   "id,name,active,section:sections(name,active,category:categories(name,active)),price_tiers(id,label,amount,unit)";
 
 export const submitQuote = createServerFn({ method: "POST" })
-  .inputValidator(SubmitQuoteSchema)
+  .validator(SubmitQuoteSchema)
   .handler(async ({ data }): Promise<{ reference: string }> => {
     const ip = getRequestIP() ?? "unknown";
     if (!allowRequest(`quote:${ip}`)) {
@@ -1528,7 +1528,7 @@ import { z } from "zod";
 import { signInAdmin, signOutAdmin, getAdminSessionOrNull, type AdminSession } from "@/lib/admin-auth.server";
 
 export const adminSignIn = createServerFn({ method: "POST" })
-  .inputValidator(z.object({ email: z.string().trim().email(), password: z.string().min(1) }))
+  .validator(z.object({ email: z.string().trim().email(), password: z.string().min(1) }))
   .handler(async ({ data }): Promise<AdminSession> => signInAdmin(data.email, data.password));
 
 export const adminSignOut = createServerFn({ method: "POST" }).handler(async () => {
@@ -1694,7 +1694,7 @@ async function nextSortOrder(table: string, filter?: { col: string; val: string 
 }
 
 export const createCategory = createServerFn({ method: "POST" })
-  .inputValidator(z.object({ name: z.string().trim().min(1).max(200) }))
+  .validator(z.object({ name: z.string().trim().min(1).max(200) }))
   .handler(async ({ data }) => {
     await requireAdmin();
     const sort_order = await nextSortOrder("categories");
@@ -1704,7 +1704,7 @@ export const createCategory = createServerFn({ method: "POST" })
   });
 
 export const updateCategory = createServerFn({ method: "POST" })
-  .inputValidator(Id.extend({ name: z.string().trim().min(1).max(200).optional(), description: z.string().max(2000).nullable().optional() }))
+  .validator(Id.extend({ name: z.string().trim().min(1).max(200).optional(), description: z.string().max(2000).nullable().optional() }))
   .handler(async ({ data: { id, ...patch } }) => {
     await requireAdmin();
     const { error } = await supabaseAdmin().from("categories").update(patch).eq("id", id);
@@ -1713,7 +1713,7 @@ export const updateCategory = createServerFn({ method: "POST" })
   });
 
 export const createSection = createServerFn({ method: "POST" })
-  .inputValidator(z.object({ categoryId: z.string().uuid(), name: z.string().trim().min(1).max(200) }))
+  .validator(z.object({ categoryId: z.string().uuid(), name: z.string().trim().min(1).max(200) }))
   .handler(async ({ data }) => {
     await requireAdmin();
     const sort_order = await nextSortOrder("sections", { col: "category_id", val: data.categoryId });
@@ -1724,7 +1724,7 @@ export const createSection = createServerFn({ method: "POST" })
   });
 
 export const updateSection = createServerFn({ method: "POST" })
-  .inputValidator(Id.extend({ name: z.string().trim().min(1).max(200).optional(), note: z.string().max(2000).nullable().optional() }))
+  .validator(Id.extend({ name: z.string().trim().min(1).max(200).optional(), note: z.string().max(2000).nullable().optional() }))
   .handler(async ({ data: { id, ...patch } }) => {
     await requireAdmin();
     const { error } = await supabaseAdmin().from("sections").update(patch).eq("id", id);
@@ -1733,7 +1733,7 @@ export const updateSection = createServerFn({ method: "POST" })
   });
 
 export const createItem = createServerFn({ method: "POST" })
-  .inputValidator(z.object({ sectionId: z.string().uuid(), name: z.string().trim().min(1).max(200) }))
+  .validator(z.object({ sectionId: z.string().uuid(), name: z.string().trim().min(1).max(200) }))
   .handler(async ({ data }) => {
     await requireAdmin();
     const sort_order = await nextSortOrder("items", { col: "section_id", val: data.sectionId });
@@ -1744,7 +1744,7 @@ export const createItem = createServerFn({ method: "POST" })
   });
 
 export const updateItemFn = createServerFn({ method: "POST" })
-  .inputValidator(Id.extend({
+  .validator(Id.extend({
     name: z.string().trim().min(1).max(200).optional(),
     description: z.string().max(2000).nullable().optional(),
     size: z.string().max(200).nullable().optional(),
@@ -1758,7 +1758,7 @@ export const updateItemFn = createServerFn({ method: "POST" })
   });
 
 export const deleteEntity = createServerFn({ method: "POST" })
-  .inputValidator(Id.extend({ kind: Kind }))
+  .validator(Id.extend({ kind: Kind }))
   .handler(async ({ data }) => {
     await requireAdmin();
     const { error } = await supabaseAdmin().from(TABLE[data.kind]).delete().eq("id", data.id);
@@ -1767,7 +1767,7 @@ export const deleteEntity = createServerFn({ method: "POST" })
   });
 
 export const setActive = createServerFn({ method: "POST" })
-  .inputValidator(Id.extend({ kind: Kind, active: z.boolean() }))
+  .validator(Id.extend({ kind: Kind, active: z.boolean() }))
   .handler(async ({ data }) => {
     await requireAdmin();
     const { error } = await supabaseAdmin().from(TABLE[data.kind]).update({ active: data.active }).eq("id", data.id);
@@ -1776,7 +1776,7 @@ export const setActive = createServerFn({ method: "POST" })
   });
 
 export const reorder = createServerFn({ method: "POST" })
-  .inputValidator(z.object({ kind: Kind, ids: z.array(z.string().uuid()).min(1).max(500) }))
+  .validator(z.object({ kind: Kind, ids: z.array(z.string().uuid()).min(1).max(500) }))
   .handler(async ({ data }) => {
     await requireAdmin();
     const sb = supabaseAdmin();
@@ -1788,7 +1788,7 @@ export const reorder = createServerFn({ method: "POST" })
   });
 
 export const replaceTiers = createServerFn({ method: "POST" })
-  .inputValidator(z.object({
+  .validator(z.object({
     itemId: z.string().uuid(),
     tiers: z.array(z.object({
       label: z.string().trim().max(100).nullable(),
@@ -2091,7 +2091,7 @@ git commit -m "feat: admin catalogue tree with dnd reorder, toggles, crud"
 const ImageKind = z.enum(["category", "item"]);
 
 export const uploadImage = createServerFn({ method: "POST" })
-  .inputValidator((data: unknown) => {
+  .validator((data: unknown) => {
     if (!(data instanceof FormData)) throw new Error("Expected FormData");
     const kind = ImageKind.parse(data.get("kind"));
     const id = z.string().uuid().parse(data.get("id"));
@@ -2117,7 +2117,7 @@ export const uploadImage = createServerFn({ method: "POST" })
   });
 
 export const removeImage = createServerFn({ method: "POST" })
-  .inputValidator(Id.extend({ kind: ImageKind }))
+  .validator(Id.extend({ kind: ImageKind }))
   .handler(async ({ data }) => {
     await requireAdmin();
     const sb = supabaseAdmin();
@@ -2370,7 +2370,7 @@ export interface AdminQuote {
 }
 
 export const listQuotes = createServerFn({ method: "GET" })
-  .inputValidator(z.object({ includeArchived: z.boolean().default(false) }))
+  .validator(z.object({ includeArchived: z.boolean().default(false) }))
   .handler(async ({ data }): Promise<AdminQuote[]> => {
     await requireAdmin();
     let q = supabaseAdmin().from("quotes").select("*, quote_lines(*)")
@@ -2382,7 +2382,7 @@ export const listQuotes = createServerFn({ method: "GET" })
   });
 
 export const setQuoteStatus = createServerFn({ method: "POST" })
-  .inputValidator(z.object({
+  .validator(z.object({
     id: z.string().uuid(),
     status: z.enum(["new", "contacted", "won", "lost", "archived"]),
   }))
@@ -2394,7 +2394,7 @@ export const setQuoteStatus = createServerFn({ method: "POST" })
   });
 
 export const deleteQuoteFn = createServerFn({ method: "POST" })
-  .inputValidator(z.object({ id: z.string().uuid() }))
+  .validator(z.object({ id: z.string().uuid() }))
   .handler(async ({ data }) => {
     await requireAdmin();
     const { error } = await supabaseAdmin().from("quotes").delete().eq("id", data.id);
@@ -2610,7 +2610,7 @@ export const listStaff = createServerFn({ method: "GET" }).handler(
 );
 
 export const createStaff = createServerFn({ method: "POST" })
-  .inputValidator(z.object({
+  .validator(z.object({
     email: z.string().trim().email().max(320).transform((s) => s.toLowerCase()),
     name: z.string().trim().min(1).max(120),
     password: z.string().min(12).max(200),
@@ -2628,7 +2628,7 @@ export const createStaff = createServerFn({ method: "POST" })
   });
 
 export const renameStaff = createServerFn({ method: "POST" })
-  .inputValidator(z.object({ id: z.string().uuid(), name: z.string().trim().min(1).max(120) }))
+  .validator(z.object({ id: z.string().uuid(), name: z.string().trim().min(1).max(120) }))
   .handler(async ({ data }) => {
     await requireAdmin();
     const { error } = await supabaseAdmin().auth.admin.updateUserById(data.id, {
@@ -2645,7 +2645,7 @@ async function activeAdminCount(): Promise<number> {
 }
 
 export const setStaffDisabled = createServerFn({ method: "POST" })
-  .inputValidator(z.object({ id: z.string().uuid(), disabled: z.boolean() }))
+  .validator(z.object({ id: z.string().uuid(), disabled: z.boolean() }))
   .handler(async ({ data }) => {
     const session = await requireAdmin();
     if (data.id === session.userId) throw new Error("You cannot disable your own account.");
@@ -2660,7 +2660,7 @@ export const setStaffDisabled = createServerFn({ method: "POST" })
   });
 
 export const deleteStaff = createServerFn({ method: "POST" })
-  .inputValidator(z.object({ id: z.string().uuid() }))
+  .validator(z.object({ id: z.string().uuid() }))
   .handler(async ({ data }) => {
     const session = await requireAdmin();
     if (data.id === session.userId) throw new Error("You cannot delete your own account.");
@@ -2671,7 +2671,7 @@ export const deleteStaff = createServerFn({ method: "POST" })
   });
 
 export const resetStaffPassword = createServerFn({ method: "POST" })
-  .inputValidator(z.object({ id: z.string().uuid(), password: z.string().min(12).max(200) }))
+  .validator(z.object({ id: z.string().uuid(), password: z.string().min(12).max(200) }))
   .handler(async ({ data }) => {
     await requireAdmin();
     const { error } = await supabaseAdmin().auth.admin.updateUserById(data.id, { password: data.password });
@@ -2973,7 +2973,7 @@ export const getSettings = createServerFn({ method: "GET" }).handler(
 );
 
 export const updateSettings = createServerFn({ method: "POST" })
-  .inputValidator(z.object({
+  .validator(z.object({
     notification_email: z.string().trim().email().max(320),
     store_hours: z.array(z.string().trim().min(1).max(200)).max(14),
     facebook_url: z.string().trim().url().max(500).nullable(),

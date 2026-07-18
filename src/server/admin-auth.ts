@@ -8,7 +8,7 @@ import {
 } from "@/lib/admin-auth.server";
 
 export const adminSignIn = createServerFn({ method: "POST" })
-  .inputValidator(z.object({ email: z.string().trim().email(), password: z.string().min(1) }))
+  .validator(z.object({ email: z.string().trim().email(), password: z.string().min(1) }))
   .handler(async ({ data }): Promise<AdminSession> => signInAdmin(data.email, data.password));
 
 export const adminSignOut = createServerFn({ method: "POST" }).handler(async () => {
