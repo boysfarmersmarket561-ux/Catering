@@ -14,7 +14,14 @@ import {
 
 export const SubmitQuoteSchema = z.object({
   name: z.string().trim().min(1).max(200),
-  email: z.string().trim().email().max(320),
+  // Lowercased so addresses stay consistent for lookup and for providers that
+  // match recipients case-sensitively.
+  email: z
+    .string()
+    .trim()
+    .email()
+    .max(320)
+    .transform((s) => s.toLowerCase()),
   phone: z.string().trim().max(50).default(""),
   eventDate: z.string().trim().max(50).default(""),
   guestCount: z.string().trim().max(50).default(""),
@@ -111,7 +118,7 @@ export const submitQuote = createServerFn({ method: "POST" })
         .select("notification_email")
         .eq("id", 1)
         .single();
-      const notifyTo = settings?.notification_email;
+      const notifyTo = settings?.notification_email?.trim().toLowerCase();
       if (!notifyTo) throw new Error("settings.notification_email missing");
       const biz = businessNotificationEmail(emailData);
       await sender.send({ to: notifyTo, ...biz });
